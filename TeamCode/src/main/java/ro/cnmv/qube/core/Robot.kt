@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.hardware.*
 import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction
 
 class Robot(private val hwMap: HardwareMap): Sensors, Servos {
+    override val voltageSensor: VoltageSensor = hwMap.voltageSensor.first()
+
     override val gyro = hwMap.gyroSensor.get("gyro") as ModernRoboticsI2cGyro
 
     override val colorSensor: ColorSensor = hwMap.colorSensor.get("jewColor")
