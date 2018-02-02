@@ -1,0 +1,25 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+
+apply from: '../build.common.gradle'
+
+android {
+    defaultConfig {
+        applicationId 'com.qualcomm.ftcrobotcontroller'
+    }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    implementation project(':FtcRobotController')
+    implementation (name: 'RobotCore-release', ext: 'aar')
+    implementation (name: 'Hardware-release', ext: 'aar')
+    implementation (name: 'FtcCommon-release', ext: 'aar')
+    implementation (name: 'Analytics-release', ext:'aar')
+    implementation (name: 'WirelessP2p-release', ext:'aar')
+}
+
+repositories {
+    mavenCentral()
+}
