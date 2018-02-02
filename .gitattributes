@@ -1,0 +1,5 @@
+* text=auto eol=lf
+/libs/** filter=lfs diff=lfs merge=lfs -text
+/FtcRobotController/** filter=lfs diff=lfs merge=lfs -text
+
+/gradle/** filter=lfs diff=lfs merge=lfs -text
