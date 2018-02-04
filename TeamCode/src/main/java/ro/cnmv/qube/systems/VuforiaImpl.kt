@@ -1,4 +1,4 @@
-package ro.cnmv.qube.systems.impl
+package ro.cnmv.qube.systems
 
 import android.content.Context
 import org.firstinspires.ftc.robotcore.external.ClassFactory
@@ -6,7 +6,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark
-import ro.cnmv.qube.systems.Vuforia
 
 class VuforiaImpl: Vuforia {
     companion object {
