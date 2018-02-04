@@ -1,8 +1,9 @@
 package ro.cnmv.qube.tests
 
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import ro.cnmv.qube.core.RobotOpMode
-import ro.cnmv.qube.pid.RemotePid
 
+@TeleOp(name = "Intake Test", group = "Tests")
 class IntakeTest: RobotOpMode() {
     override fun runOpMode() {
         waitForStart()
