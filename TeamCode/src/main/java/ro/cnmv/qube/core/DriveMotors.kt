@@ -4,24 +4,21 @@ import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotor.RunMode
 import org.firstinspires.ftc.robotcore.external.Telemetry
 
-const val MAX_POWER = 0.78
+interface DriveMotors {
+    companion object {
+        const val MAX_POWER = 0.78
 
-const val FRONT_LEFT = 1.0
-const val FRONT_RIGHT = 1.0
-const val BACK_LEFT = 1.0
-const val BACK_RIGHT = 1.0
+        const val FRONT_LEFT = 1.0
+        const val FRONT_RIGHT = 1.0
+        const val BACK_LEFT = 1.0
+        const val BACK_RIGHT = 1.0
+    }
 
-interface Motors: Telemetry {
     val frontLeft: DcMotor
     val frontRight: DcMotor
 
     val backLeft: DcMotor
     val backRight: DcMotor
-
-    val intakeLeft: DcMotor
-    val intakeRight: DcMotor
-
-    val intakeOpen: DcMotor
 
     fun setEncoders(useEncoders: Boolean) {
         if (useEncoders) {
@@ -49,15 +46,15 @@ interface Motors: Telemetry {
         this.backRight.power = backRight * BACK_RIGHT * MAX_POWER
     }
 
-    fun stop() {
+    fun stopMotors() {
         setPower(0.0, 0.0, 0.0, 0.0)
     }
 
-    fun printPower() {
-        addData("Front left", frontLeft.power.toString())
-        addData("Front right", frontRight.power.toString())
-        addData("Back left", backLeft.power.toString())
-        addData("Back right", backRight.power.toString())
+    fun printPower(telemetry: Telemetry) {
+        telemetry.addData("Front left", frontLeft.power.toString())
+        telemetry.addData("Front right", frontRight.power.toString())
+        telemetry.addData("Back left", backLeft.power.toString())
+        telemetry.addData("Back right", backRight.power.toString())
     }
 
     private fun motors(): Array<DcMotor> = arrayOf(frontLeft, frontRight, backLeft, backRight)
