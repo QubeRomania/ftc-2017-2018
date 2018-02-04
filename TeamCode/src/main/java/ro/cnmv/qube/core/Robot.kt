@@ -3,10 +3,9 @@ package ro.cnmv.qube.core
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro
 import com.qualcomm.robotcore.hardware.*
 import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction
-import ro.cnmv.qube.systems.CubesIntake
-import ro.cnmv.qube.systems.impl.VuforiaImpl
+import ro.cnmv.qube.systems.*
 
-class Robot(private val hwMap: HardwareMap): DriveMotors, Sensors, Servos, CubesIntake {
+class Robot(private val hwMap: HardwareMap): DriveMotors, Gyro, Drive, CubesIntake, CubesLift, CubesDrop, Jewel {
     // VUFORIA
     val vuforia = VuforiaImpl(hwMap.appContext)
 
@@ -22,9 +21,16 @@ class Robot(private val hwMap: HardwareMap): DriveMotors, Sensors, Servos, Cubes
 
     override val intakeOpen: DcMotor = initMotor("intakeOpenMotor", Direction.FORWARD)
 
-    override val voltageSensor: VoltageSensor = hwMap.voltageSensor.first()
-    val voltage
-        get() = voltageSensor.voltage
+    /// Robot's battery voltage in Volts.
+    val voltage by lazy {
+        val voltageSensor = hwMap.voltageSensor.first()
+
+        // Read voltage only once, when starting OpMode.
+        voltageSensor.voltage
+    }
+
+    val volagePowerConstant
+        get() = 12.0 / voltage
 
     // SENSORS
     override val gyro = initGyro()
@@ -36,7 +42,6 @@ class Robot(private val hwMap: HardwareMap): DriveMotors, Sensors, Servos, Cubes
     override val leftDropServo = initCRServo("leftDropServo", Direction.FORWARD)
     override val rightDropServo = initCRServo("rightDropServo", Direction.REVERSE)
     override val jewServo = initServo("jewServo")
-
 
     /// Initializes a DC motor.
     private fun initMotor(name: String, direction: Direction): DcMotor {

@@ -9,7 +9,7 @@ interface CubesIntake {
     val intakeOpen: DcMotor
 
     /// Opens and closes the intake funnel.
-    fun open(gp: Gamepad) {
+    fun openWithGamepad(gp: Gamepad) {
         intakeOpen.power = when {
             gp.x -> 1.0
             gp.y -> -1.0
@@ -18,7 +18,7 @@ interface CubesIntake {
     }
 
     /// Controls cube intake.
-    fun intake(gp: Gamepad) {
+    fun intakeWithGamepad(gp: Gamepad) {
         intakeLeft.power = roundPower(gp.left_stick_y)
         intakeRight.power = roundPower(gp.right_stick_y)
     }
