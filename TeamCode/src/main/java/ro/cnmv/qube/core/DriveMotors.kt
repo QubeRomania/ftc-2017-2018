@@ -57,5 +57,10 @@ interface DriveMotors {
         telemetry.addData("Back right", backRight.power.toString())
     }
 
+    fun printPositions(telemetry: Telemetry) {
+        telemetry.addData("Front left pos", frontLeft.currentPosition)
+        telemetry.addData("Front right pos", frontRight.currentPosition)
+    }
+
     private fun motors(): Array<DcMotor> = arrayOf(frontLeft, frontRight, backLeft, backRight)
 }
