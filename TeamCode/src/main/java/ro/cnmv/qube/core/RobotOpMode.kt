@@ -26,7 +26,7 @@ abstract class RobotOpMode: LinearOpMode() {
         val gyro = robot.gyro
 
         gyro.calibrate()
-        while (opModeIsActive() && gyro.isCalibrating) {
+        while (!isStopRequested() && gyro.isCalibrating) {
             setStatus("Calibrating gyro. Please wait...")
             update()
 
