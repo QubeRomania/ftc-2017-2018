@@ -13,7 +13,7 @@ interface Jewel {
     }
 
     /// The color of the jewel.
-    val color: Color
+    val jewelColor: Color
         get() {
             val red = colorSensor.red()
             val blue = colorSensor.blue()
@@ -25,7 +25,7 @@ interface Jewel {
             }
         }
 
-    fun setOpen(open: Boolean) {
+    fun openJewelServo(open: Boolean) {
         jewServo.position = if (open) {
             1.0
         } else {
