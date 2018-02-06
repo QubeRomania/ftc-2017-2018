@@ -3,7 +3,7 @@ import java.util.regex.Pattern
 android {
     buildToolsVersion '27.0.3'
 
-    compileSdkVersion 27
+    compileSdkVersion 23
 
     signingConfigs {
         debug {
