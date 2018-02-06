@@ -7,17 +7,17 @@ android {
     defaultConfig {
         applicationId 'com.qualcomm.ftcrobotcontroller'
     }
+    compileSdkVersion 27
 }
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
     implementation project(':FtcRobotController')
-    implementation (name: 'RobotCore-release', ext: 'aar')
-    implementation (name: 'Hardware-release', ext: 'aar')
-    implementation (name: 'FtcCommon-release', ext: 'aar')
-    implementation (name: 'Analytics-release', ext:'aar')
-    implementation (name: 'WirelessP2p-release', ext:'aar')
+    implementation(name: 'RobotCore-release', ext: 'aar')
+    implementation(name: 'Hardware-release', ext: 'aar')
+    implementation(name: 'FtcCommon-release', ext: 'aar')
+    implementation(name: 'Analytics-release', ext: 'aar')
+    implementation(name: 'WirelessP2p-release', ext: 'aar')
 }
 
 repositories {
