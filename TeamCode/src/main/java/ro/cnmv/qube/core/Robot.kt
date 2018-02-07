@@ -5,7 +5,10 @@ import com.qualcomm.robotcore.hardware.*
 import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction
 import ro.cnmv.qube.systems.*
 
-class Robot(private val hwMap: HardwareMap): DriveMotors, Gyro, Drive, CubesIntake, CubesLift, CubesDrop, Jewel {
+class Robot(private val opMode: RobotOpMode):
+        DriveMotors, Gyro, Drive, CubesIntake, CubesLift, CubesDrop, Jewel, OpModeAccess by opMode {
+    private val hwMap = opMode.hardwareMap
+
     // VUFORIA
     val vuforia = VuforiaImpl(hwMap.appContext)
 
@@ -49,6 +52,7 @@ class Robot(private val hwMap: HardwareMap): DriveMotors, Gyro, Drive, CubesInta
 
         motor.power = 0.0
         motor.direction = direction
+        motor.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
 
         return motor
     }

@@ -1,16 +1,17 @@
 package ro.cnmv.qube.systems
 
+import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.Gamepad
 import ro.cnmv.qube.core.DriveMotors
 import ro.cnmv.qube.core.Gyro
+import ro.cnmv.qube.core.OpModeAccess
 import ro.cnmv.qube.pid.DistancePid
 import ro.cnmv.qube.pid.Pid
 import kotlin.math.absoluteValue
-import kotlin.math.max
 import kotlin.math.roundToInt
 import kotlin.math.sign
 
-interface Drive: DriveMotors, Gyro {
+interface Drive: DriveMotors, Gyro, OpModeAccess {
     companion object {
         private const val TICKS_PER_MOTOR_ROTATION = 1120.0
         private const val RATIO = 2.0 * TICKS_PER_MOTOR_ROTATION / 100.0
@@ -51,29 +52,42 @@ interface Drive: DriveMotors, Gyro {
 
         val targetDirection = heading
 
+        var lastError = 0.0
+
+        val minDistance = 50.0
+
+        frontLeft.mode = DcMotor.RunMode.RUN_USING_ENCODER
+        frontRight.mode = DcMotor.RunMode.RUN_USING_ENCODER
+
+
         // PID distance function.
-        fun pid(maxSpeed: Double, minDistance: Double) {
+        fun pidDrive(maxSpeed: Double, minDistance: Double) {
             var lastError = 0.0
 
-            while (distanceTicks - frontLeft.currentPosition.absoluteValue > minDistance.ticks) {
-                val error = (heading - targetDirection) / 180.0
+            while (opModeActive && distanceTicks - frontLeft.currentPosition.absoluteValue > minDistance.ticks) {
+                val error = (targetDirection - heading) / 180.0
+                tele.addData("Error", error)
 
                 val motorDif = (p * error) + (i * (error + lastError) + (d * (error - lastError)))
 
                 val sum0 = (sgn + motorDif) * maxSpeed
                 val sum1 = (sgn - motorDif) * maxSpeed
 
+                tele.addData("sum0 / sum1", "%.2f / %.2f", sum0, sum1)
+
                 setPower(sum0, sum1, sum0, sum1)
+
+                tele.update()
 
                 lastError = error
             }
         }
 
         // Go fast until the last 60 cm.
-        pid(0.7, 60.0)
+        pidDrive(0.7, 60.0)
 
         // Precise PID.
-        pid(0.3, 0.0)
+        pidDrive(0.3, 0.0)
 
         stopMotors()
     }
@@ -82,9 +96,16 @@ interface Drive: DriveMotors, Gyro {
         val delta = target - heading
         val sgn = delta.sign
 
-        while (Math.abs(target - heading) > 5.0) {
-            val power = 0.2 * sgn
+        while (opModeActive && (target - heading).absoluteValue > 5.0) {
+            tele.addData("Current heading", heading)
+            tele.addData("Target heading", target)
+            tele.addData("Rotate Error", target - heading)
+
+            val power = 0.3 * sgn
+
             setPower(-power, power, -power, power)
+
+            tele.update()
         }
 
         stopMotors()

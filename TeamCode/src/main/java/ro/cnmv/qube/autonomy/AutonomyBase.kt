@@ -7,9 +7,9 @@ import ro.cnmv.qube.systems.Jewel
 
 abstract class AutonomyBase: RobotOpMode() {
     companion object {
-        const val DISTANCE_LEFT = 72.05;
-        const val DISTANCE_CENTER = 91.44;
-        const val DISTANCE_RIGHT = 110.82;
+        const val DISTANCE_LEFT = 72.05
+        const val DISTANCE_CENTER = 91.44
+        const val DISTANCE_RIGHT = 110.82
     }
 
     /// Sign of direction towards crypto box.
@@ -19,7 +19,7 @@ abstract class AutonomyBase: RobotOpMode() {
     private var vuMark = RelicRecoveryVuMark.UNKNOWN
 
     override fun runOpMode() {
-        robot.setEncoders(true)
+        robot.resetEncoders()
 
         calibrateGyro()
 

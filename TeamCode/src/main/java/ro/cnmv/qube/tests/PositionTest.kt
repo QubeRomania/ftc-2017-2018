@@ -6,13 +6,13 @@ import ro.cnmv.qube.core.RobotOpMode
 @Autonomous(name = "Encoder Position Test", group = "Tests")
 class PositionTest: RobotOpMode() {
     override fun runOpMode() {
-        robot.setEncoders(true)
+        robot.resetEncoders()
 
         waitForStart()
 
         while (opModeIsActive()) {
-            robot.printPositions(telemetry)
-            telemetry.update()
+            robot.printPositions()
+            update()
         }
     }
 }
