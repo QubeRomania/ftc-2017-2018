@@ -53,10 +53,6 @@ interface Drive: DriveMotors, Gyro, OpModeAccess {
 
         val targetDirection = heading
 
-        var lastError = 0.0
-
-        val minDistance = 50.0
-
         frontLeft.mode = DcMotor.RunMode.RUN_USING_ENCODER
         frontRight.mode = DcMotor.RunMode.RUN_USING_ENCODER
 
@@ -101,12 +97,11 @@ interface Drive: DriveMotors, Gyro, OpModeAccess {
             tele.addData("Current heading", heading)
             tele.addData("Target heading", target)
             tele.addData("Rotate Error", target - heading)
+            tele.update()
 
-            val power = 0.15 * sgn
+            val power = 0.25 * sgn
 
             setPower(-power, power, -power, power)
-
-            tele.update()
         }
 
         stopMotors()
