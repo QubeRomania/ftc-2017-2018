@@ -8,7 +8,8 @@ class ServoTest: RobotOpMode() {
     override fun runOpMode() {
         waitForStart()
         while (opModeActive){
-            robot.jewServo.position = -gamepad1.left_stick_y.toDouble()
+            robot.intakeWithGamepad(gamepad2)
+            robot.jewServo.position = (-gamepad1.left_stick_y.toDouble() + 1) / 2
         }
     }
 
