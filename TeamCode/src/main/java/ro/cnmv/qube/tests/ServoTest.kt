@@ -8,8 +8,15 @@ class ServoTest: RobotOpMode() {
     override fun runOpMode() {
         waitForStart()
         while (opModeActive){
+            // Enable intake.
             robot.intakeWithGamepad(gamepad2)
+
+            // Test the jewel servo.
             robot.jewServo.position = (-gamepad1.left_stick_y.toDouble() + 1) / 2
+
+            // Update the servo's position.
+            tele.addData("Servo position", robot.jewServo.position)
+            tele.update()
         }
     }
 
