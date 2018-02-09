@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction
 import ro.cnmv.qube.systems.*
 
 class Robot(private val opMode: RobotOpMode):
-        DriveMotors, Gyro, Drive, CubesIntake, CubesLift, CubesDrop, Jewel, OpModeAccess by opMode {
+        DriveMotors, Gyro, Drive, CubesIntake, CubesLift, CubesDrop, Jewel, Glider, OpModeAccess by opMode {
     private val hwMap = opMode.hardwareMap
 
     // VUFORIA
@@ -23,6 +23,8 @@ class Robot(private val opMode: RobotOpMode):
     override val intakeRight: DcMotor = initMotor("rightIntakeMotor", Direction.REVERSE)
 
     override val intakeOpen: DcMotor = initMotor("intakeOpenMotor", Direction.FORWARD)
+
+    override val gliderMotor: DcMotor = initMotor("gliderMotor", Direction.FORWARD)
 
     /// Robot's battery voltage in Volts.
     val voltage by lazy {

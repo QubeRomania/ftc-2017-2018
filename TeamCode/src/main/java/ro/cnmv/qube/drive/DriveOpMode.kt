@@ -11,6 +11,9 @@ class DriveOpMode: RobotOpMode() {
             // DRIVE
             robot.driveWithGamepad(gamepad1)
 
+            // GLIDER
+            robot.gliderWithGamepad(gamepad1)
+
             // CUBES INTAKE
             robot.intakeWithGamepad(gamepad2)
 
