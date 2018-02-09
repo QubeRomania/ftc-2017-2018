@@ -66,12 +66,12 @@ class Robot(private val opMode: RobotOpMode):
         return gyro
     }
 
-    private fun initColorSensor(): ColorSensor {
+    private fun initColorSensor(): NormalizedColorSensor {
         val colorSensor = hwMap.colorSensor["jewColor"]
 
         colorSensor.enableLed(true)
 
-        return colorSensor
+        return colorSensor as NormalizedColorSensor
     }
 
     /// Initializes a continuously rotating servo.
