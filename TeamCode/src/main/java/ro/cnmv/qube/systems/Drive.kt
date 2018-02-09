@@ -2,6 +2,7 @@ package ro.cnmv.qube.systems
 
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.Gamepad
+import com.qualcomm.robotcore.util.ElapsedTime
 import ro.cnmv.qube.core.DriveMotors
 import ro.cnmv.qube.core.Gyro
 import ro.cnmv.qube.core.OpModeAccess
@@ -107,6 +108,17 @@ interface Drive: DriveMotors, Gyro, OpModeAccess {
 
             tele.update()
         }
+
+        stopMotors()
+    }
+
+    fun driveTime(millis: Long, power: Double) {
+        val timer = ElapsedTime()
+
+        setPower(power, power, power, power)
+
+        while (opModeActive && timer.milliseconds() < millis)
+            ;
 
         stopMotors()
     }
