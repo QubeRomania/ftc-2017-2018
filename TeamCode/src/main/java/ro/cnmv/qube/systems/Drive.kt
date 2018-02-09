@@ -96,12 +96,12 @@ interface Drive: DriveMotors, Gyro, OpModeAccess {
         val delta = target - heading
         val sgn = delta.sign
 
-        while (opModeActive && (target - heading).absoluteValue > 5.0) {
+        while (opModeActive && (target - heading).absoluteValue > 0) {
             tele.addData("Current heading", heading)
             tele.addData("Target heading", target)
             tele.addData("Rotate Error", target - heading)
 
-            val power = 0.3 * sgn
+            val power = 0.15 * sgn
 
             setPower(-power, power, -power, power)
 

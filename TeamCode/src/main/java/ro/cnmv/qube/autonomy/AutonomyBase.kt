@@ -43,7 +43,7 @@ abstract class AutonomyBase: RobotOpMode() {
             else -> -10.0
         }
 
-        robot.rotateTo(angle)
+        robot.rotateTo(angle * directionSign)
 
         robot.openJewelServo(false)
     }
