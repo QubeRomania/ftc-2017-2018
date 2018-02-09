@@ -10,6 +10,10 @@ abstract class RobotOpMode: LinearOpMode(), OpModeAccess {
     override val opModeActive
         get() = opModeIsActive()
 
+    override fun waitMillis(millis: Long) {
+        waitForMs(millis)
+    }
+
     /// The robot's hardware.
     protected val robot: Robot by lazy {
         if (hardwareMap == null)
