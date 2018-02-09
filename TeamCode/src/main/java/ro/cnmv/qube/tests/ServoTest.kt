@@ -1,9 +1,9 @@
 package ro.cnmv.qube.tests
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import ro.cnmv.qube.core.RobotOpMode
 
-@Autonomous (name = "Servo Test", group = "Tests")
+@TeleOp (name = "Servo Test", group = "Tests")
 class ServoTest: RobotOpMode() {
     override fun runOpMode() {
         waitForStart()
