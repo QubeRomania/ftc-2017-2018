@@ -6,5 +6,5 @@ interface Gyro {
     val gyro: ModernRoboticsI2cGyro
 
     val heading: Int
-        get() = gyro.integratedZValue
+        get() = -gyro.integratedZValue
 }
