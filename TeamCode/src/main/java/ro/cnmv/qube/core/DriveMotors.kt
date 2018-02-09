@@ -21,9 +21,8 @@ interface DriveMotors: OpModeAccess {
     val backRight: DcMotor
 
     fun resetEncoders() {
-        for (motor in motors()) {
-            motor.mode = RunMode.STOP_AND_RESET_ENCODER
-        }
+        frontLeft.mode = RunMode.STOP_AND_RESET_ENCODER
+        frontRight.mode = RunMode.STOP_AND_RESET_ENCODER
     }
 
     fun setPower(frontLeft: Double, frontRight: Double, backLeft: Double, backRight: Double) {
