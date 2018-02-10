@@ -15,7 +15,7 @@ import kotlin.math.sign
 interface Drive: DriveMotors, Gyro, OpModeAccess {
     companion object {
         private const val TICKS_PER_MOTOR_ROTATION = 1120.0
-        private const val RATIO = 2.0 * TICKS_PER_MOTOR_ROTATION / 100.0
+        private const val RATIO = 2.0 * TICKS_PER_MOTOR_ROTATION / 65.0
 
         val Double.ticks
             get() = (this * RATIO).roundToInt()
@@ -34,12 +34,12 @@ interface Drive: DriveMotors, Gyro, OpModeAccess {
         )
     }
 
-    fun driveDistance(distance: Double) {
+    fun driveDistance(distance: Double, targetDirection: Double) {
         val pid = DistancePid()
-        driveDistanceWithPid(distance, pid)
+        driveDistanceWithPid(distance, targetDirection, pid)
     }
 
-    fun driveDistanceWithPid(distance: Double, pid: Pid) {
+    fun driveDistanceWithPid(distance: Double, targetDirection: Double, pid: Pid) {
         val p = pid.p
         val i = pid.i
         val d = pid.d
@@ -51,8 +51,6 @@ interface Drive: DriveMotors, Gyro, OpModeAccess {
         val distanceTicks = distance.ticks.absoluteValue
         val sgn = distance.sign
 
-        val targetDirection = heading
-
         frontLeft.mode = DcMotor.RunMode.RUN_USING_ENCODER
         frontRight.mode = DcMotor.RunMode.RUN_USING_ENCODER
 
@@ -62,26 +60,24 @@ interface Drive: DriveMotors, Gyro, OpModeAccess {
             var lastError = 0.0
 
             while (opModeActive && distanceTicks - frontLeft.currentPosition.absoluteValue > minDistance.ticks) {
-                val error = (targetDirection - heading) / 180.0
+                val error = (targetDirection - heading) * sgn
                 tele.addData("Error", error)
 
-                val motorDif = (p * error) + (i * (error + lastError) + (d * (error - lastError)))
+                val motorDif = ((p * error) + (i * (error + lastError) + (d * (error - lastError))))
 
                 val sum0 = (sgn + motorDif) * maxSpeed
                 val sum1 = (sgn - motorDif) * maxSpeed
 
-                tele.addData("sum0 / sum1", "%.2f / %.2f", sum0, sum1)
+                tele.update()
 
                 setPower(sum0, sum1, sum0, sum1)
-
-                tele.update()
 
                 lastError = error
             }
         }
 
-        // Go fast until the last 60 cm.
-        pidDrive(0.7, 60.0)
+        // Go fast until the last 30 cm.
+        pidDrive(0.7, 30.0)
 
         // Precise PID.
         pidDrive(0.3, 0.0)
@@ -90,19 +86,19 @@ interface Drive: DriveMotors, Gyro, OpModeAccess {
     }
 
     fun rotateTo(target: Double) {
-        val delta = target - heading
-        val sgn = delta.sign
+        do {
+            val error = target - heading
 
-        while (opModeActive && (target - heading).absoluteValue > 0) {
             tele.addData("Current heading", heading)
             tele.addData("Target heading", target)
             tele.addData("Rotate Error", target - heading)
             tele.update()
 
-            val power = 0.25 * sgn
+            val power = 0.3 * error.sign
 
             setPower(-power, power, -power, power)
-        }
+
+        } while (opModeActive && error.absoluteValue > 0.5)
 
         stopMotors()
     }

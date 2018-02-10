@@ -48,11 +48,11 @@ class PidTest: RobotOpMode() {
             if (gp.checkButtonHold(GamepadButton.Y) && timer4.milliseconds() > delay) {
                 val distance = 100.0
 
-                robot.driveDistanceWithPid(distance, pid)
+                robot.driveDistanceWithPid(distance, targetAngle, pid)
 
                 waitForMs(1000)
 
-                robot.driveDistanceWithPid(-distance, pid)
+                robot.driveDistanceWithPid(-distance, targetAngle, pid)
 
                 timer4.reset()
             }
