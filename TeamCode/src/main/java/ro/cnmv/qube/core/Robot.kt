@@ -7,6 +7,7 @@ import ro.cnmv.qube.systems.*
 
 class Robot(private val opMode: RobotOpMode):
         DriveMotors, Gyro, Drive, CubesIntake, CubesLift, CubesDrop, Jewel, Glider, OpModeAccess by opMode {
+
     private val hwMap = opMode.hardwareMap
 
     // VUFORIA
@@ -34,8 +35,10 @@ class Robot(private val opMode: RobotOpMode):
         voltageSensor.voltage
     }
 
-    val volagePowerConstant
+    val voltagePowerConstant
         get() = 12.0 / voltage
+
+    override var power: Double = 0.0
 
     // SENSORS
     override val gyro = initGyro()

@@ -8,7 +8,7 @@ interface CubesDrop {
     val rightDropServo: CRServo
 
     fun dropWithGamepad(gp: Gamepad) {
-        val power = gp.right_trigger - gp.left_trigger
+        val power =  gp.left_trigger - gp.right_trigger
         drop(power.toDouble())
     }
 

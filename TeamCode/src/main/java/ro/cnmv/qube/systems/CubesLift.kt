@@ -7,11 +7,14 @@ interface CubesLift {
     val leftLiftServo: CRServo
     val rightLiftServo: CRServo
 
+    var power: Double
+
     fun liftWithGamepad(gp: Gamepad) {
-        val power = when {
+        power = when {
             gp.a -> 1.0
             gp.b -> -1.0
-            else -> 0.0
+            gp.x -> 0.0
+            else -> power
         }
 
         lift(power)

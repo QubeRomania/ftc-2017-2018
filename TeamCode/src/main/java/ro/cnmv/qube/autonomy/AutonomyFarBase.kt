@@ -5,17 +5,17 @@ import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark
 import ro.cnmv.qube.core.RobotOpMode
 import ro.cnmv.qube.systems.Jewel
 
-abstract class AutonomyBase: RobotOpMode() {
+abstract class AutonomyFarBase : RobotOpMode() {
     companion object {
         const val JEWEL_HIT_ROTATION = 7.0
-
-        const val DISTANCE_LEFT = 50.0
-        const val DISTANCE_CENTER = 72.0
-        const val DISTANCE_RIGHT = 91.44
     }
 
     /// Sign of direction towards crypto box.
     protected abstract val directionSign: Double
+
+    protected abstract val distanceLeft: Double
+    protected abstract val distanceCenter: Double
+    protected abstract val distanceRight: Double
 
     /// Detected VuMark.
     private var vuMark = RelicRecoveryVuMark.UNKNOWN
@@ -26,7 +26,7 @@ abstract class AutonomyBase: RobotOpMode() {
         robot.resetEncoders()
 
         // Adjust the crypto box's direction for an error.
-        cryptoBoxDirection = 90.0 - 3 * directionSign
+        cryptoBoxDirection = 87.0
 
         calibrateGyro()
 
@@ -109,10 +109,10 @@ abstract class AutonomyBase: RobotOpMode() {
         setStatus("Driving to crypto box.")
         update()
 
-        val distance = vuMark.distance
+        val distance = vuMark.distance + if (directionSign == -1.0) { 10.0 } else { 0.0 }
         robot.driveDistance(directionSign * -distance, 0.0)
 
-        robot.rotateTo(cryptoBoxDirection * directionSign)
+        robot.rotateTo(cryptoBoxDirection)
 
         waitForMs(200)
     }
@@ -120,9 +120,9 @@ abstract class AutonomyBase: RobotOpMode() {
     /// Converts a detected VuMark to a distance we must travel.
     private val RelicRecoveryVuMark.distance
         get() = when (this) {
-            RelicRecoveryVuMark.LEFT -> DISTANCE_LEFT
-            RelicRecoveryVuMark.RIGHT -> DISTANCE_RIGHT
-            else -> DISTANCE_CENTER
+            RelicRecoveryVuMark.LEFT -> distanceLeft
+            RelicRecoveryVuMark.RIGHT -> distanceRight
+            else -> distanceCenter
         }
 
     private fun approachCryptoBox() {

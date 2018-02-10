@@ -23,7 +23,7 @@ class VuforiaTest: RobotOpMode() {
                 RelicRecoveryVuMark.RIGHT -> "Right"
             }
 
-            telemetry.addData("Detected VuMark:", vuMarkType)
+            telemetry.addData("Detected VuMark", vuMarkType)
             telemetry.update()
 
             // Add a small delay to the loop.

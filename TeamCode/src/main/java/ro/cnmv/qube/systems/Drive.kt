@@ -60,7 +60,7 @@ interface Drive: DriveMotors, Gyro, OpModeAccess {
             var lastError = 0.0
 
             while (opModeActive && distanceTicks - frontLeft.currentPosition.absoluteValue > minDistance.ticks) {
-                val error = (targetDirection - heading) * sgn
+                val error = (targetDirection - heading) * -1.0
                 tele.addData("Error", error)
 
                 val motorDif = ((p * error) + (i * (error + lastError) + (d * (error - lastError))))
