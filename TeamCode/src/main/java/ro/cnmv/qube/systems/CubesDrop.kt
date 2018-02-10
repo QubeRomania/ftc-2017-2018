@@ -13,12 +13,6 @@ interface CubesDrop {
     }
 
     fun drop(power: Double) {
-        val power = when {
-            power < -0.25 -> -1.0
-            power > 0.25 -> 1.0
-            else -> 0.0
-        }
-
         leftDropServo.power = power
         rightDropServo.power = power
     }
