@@ -18,16 +18,12 @@ class VuforiaImpl: Vuforia {
     private val relicTemplate: VuforiaTrackable
 
     constructor(context: Context) {
-        /* TODO: decide whether to enable camera monitoring.
         // Obtain the ID of the camera view.
         val cameraMonitorViewId = context.resources.getIdentifier(
             "cameraMonitorViewId",
             "id",
             context.packageName
         )
-        */
-
-        val cameraMonitorViewId = 0
 
         val parameters = VuforiaLocalizer.Parameters(cameraMonitorViewId)
 
