@@ -31,7 +31,7 @@ interface DriveMotors: OpModeAccess {
         this.backLeft.power = backLeft * BACK_LEFT * MAX_POWER
         this.backRight.power = backRight * BACK_RIGHT * MAX_POWER
 
-        printPower()
+        //printPower()
     }
 
     fun stopMotors() {
