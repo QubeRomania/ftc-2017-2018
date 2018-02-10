@@ -1,6 +1,5 @@
 package ro.cnmv.qube.systems
 
-import com.qualcomm.robotcore.hardware.ColorSensor
 import com.qualcomm.robotcore.hardware.NormalizedColorSensor
 import com.qualcomm.robotcore.hardware.Servo
 import ro.cnmv.qube.core.OpModeAccess
