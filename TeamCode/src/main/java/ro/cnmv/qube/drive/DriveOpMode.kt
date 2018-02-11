@@ -27,6 +27,11 @@ class DriveOpMode: RobotOpMode() {
 
             // CUBES OPEN
             robot.openWithGamepad(gamepad2)
+
+            // RELIC
+            robot.grabRelic(gamepad2)
+            robot.liftRelic(gamepad2)
+
         }
     }
 }

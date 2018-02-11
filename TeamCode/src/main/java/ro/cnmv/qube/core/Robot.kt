@@ -3,10 +3,11 @@ package ro.cnmv.qube.core
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro
 import com.qualcomm.robotcore.hardware.*
 import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction
+import com.qualcomm.robotcore.util.ElapsedTime
 import ro.cnmv.qube.systems.*
 
 class Robot(private val opMode: RobotOpMode):
-        DriveMotors, Gyro, Drive, CubesIntake, CubesLift, CubesDrop, Jewel, Glider, OpModeAccess by opMode {
+        DriveMotors, Gyro, Drive, CubesIntake, CubesLift, CubesDrop, Jewel, Glider, RelicGrabber, OpModeAccess by opMode {
 
     private val hwMap = opMode.hardwareMap
 
@@ -50,6 +51,17 @@ class Robot(private val opMode: RobotOpMode):
     override val leftDropServo = initCRServo("leftDropServo", Direction.FORWARD)
     override val rightDropServo = initCRServo("rightDropServo", Direction.REVERSE)
     override val jewServo = initServo("jewServo")
+    override val relicGrabServo = initServo("relicGrabServo")
+    override val relicLiftServo = initServo("relicLiftServo")
+
+
+    // RELIC
+
+    override var relicLiftTime: Long = 0
+    override var relicGrabTime: Long = 0
+    override var relicGrabState: Boolean = false
+    override var relicLiftState: Boolean = false
+    override val timer: ElapsedTime = ElapsedTime()
 
     /// Initializes a DC motor.
     private fun initMotor(name: String, direction: Direction): DcMotor {
