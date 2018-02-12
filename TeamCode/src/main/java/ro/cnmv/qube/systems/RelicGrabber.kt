@@ -22,7 +22,10 @@ interface RelicGrabber{
             relicGrabTime = timer.milliseconds().toLong()
         }
 
-        relicGrabServo.position = when(relicGrabState){true -> 1.0 else -> 0.0}
+        relicGrabServo.position = when(relicGrabState) {
+            true -> 1.0
+            else -> 0.0
+        }
     }
 
     fun liftRelic(gp: Gamepad){
