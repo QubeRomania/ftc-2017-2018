@@ -6,8 +6,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 class AutonomyNearBlue: AutonomyNearBase() {
     override val directionSign = 1.0
 
-    override val distanceLeft = 10.0
-    override val distanceCenter = 22.5
-    override val distanceRight = 55.0
+    override val distanceLeft = 15.0
+    override val distanceCenter = 20.5
+    override val distanceRight = 36.0
 
 }

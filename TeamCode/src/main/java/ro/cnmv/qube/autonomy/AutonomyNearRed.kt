@@ -7,7 +7,7 @@ class AutonomyNearRed: AutonomyNearBase() {
     override val directionSign = -1.0
 
     override val distanceLeft = 50.0
-    override val distanceCenter = 31.0
+    override val distanceCenter = 26.0
     override val distanceRight = 6.0
 
 }

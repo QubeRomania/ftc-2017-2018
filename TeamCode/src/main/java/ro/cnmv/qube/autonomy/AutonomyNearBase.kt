@@ -36,8 +36,8 @@ abstract class AutonomyNearBase: RobotOpMode() {
         detectJewel()
 
         robot.driveDistance(when(directionSign){-1.0 -> -70.0 else -> -50.0},  0.0)
-        robot.rotateTo(-90.0)
-        robot.rotateTo(-90.0)
+        robot.rotateTo(-85.0)
+        robot.rotateTo(-85.0)
         driveToCryptoBox()
 
         approachCryptoBox()
@@ -128,8 +128,8 @@ abstract class AutonomyNearBase: RobotOpMode() {
         val distance = vuMark.distance
         robot.driveDistance(-distance, robot.heading.toDouble())
 
-        robot.rotateTo(when(directionSign){ 1.0 -> -3.0 else -> -(175.toDouble())})
-        robot.rotateTo(when(directionSign){ 1.0 -> -3.0 else -> -(175.toDouble())})
+        robot.rotateTo(when(directionSign){ 1.0 -> -0.0 else -> -(175.toDouble())})
+        robot.rotateTo(when(directionSign){ 1.0 -> -0.0 else -> -(175.toDouble())})
 
         waitForMs(200)
     }

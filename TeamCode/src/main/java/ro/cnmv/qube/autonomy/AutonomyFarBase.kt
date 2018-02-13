@@ -26,7 +26,7 @@ abstract class AutonomyFarBase : RobotOpMode() {
         robot.resetEncoders()
 
         // Adjust the crypto box's direction for an error.
-        cryptoBoxDirection = 87.0
+        cryptoBoxDirection = 85.0
 
         calibrateGyro()
 
@@ -113,6 +113,7 @@ abstract class AutonomyFarBase : RobotOpMode() {
         robot.driveDistance(directionSign * -distance, 0.0)
 
         robot.rotateTo(cryptoBoxDirection)
+        robot.rotateTo(cryptoBoxDirection)
 
         waitForMs(200)
     }
@@ -140,7 +141,7 @@ abstract class AutonomyFarBase : RobotOpMode() {
         setStatus("Dropping cube")
         update()
 
-        robot.drop(-0.5)
+        robot.drop(-0.6)
         waitForMs(900)
         robot.drop(0.0)
 
