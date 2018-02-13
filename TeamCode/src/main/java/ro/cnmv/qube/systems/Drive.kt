@@ -86,6 +86,10 @@ interface Drive: DriveMotors, Gyro, OpModeAccess {
     }
 
     fun rotateTo(target: Double) {
+        rotateToPower(target, 0.3)
+    }
+
+    fun rotateToPower(target: Double, rotatePower: Double) {
         do {
             val error = target - heading
 
@@ -94,7 +98,7 @@ interface Drive: DriveMotors, Gyro, OpModeAccess {
             tele.addData("Rotate Error", target - heading)
             tele.update()
 
-            val power = 0.3 * error.sign
+            val power = rotatePower * error.sign
 
             setPower(-power, power, -power, power)
 

@@ -8,7 +8,7 @@ class ServoTest: RobotOpMode() {
     override fun runOpMode() {
         waitForStart()
 
-        val controller = robot.leftLiftServo.controller
+        val controller = robot.jewServo.controller
         val servo = 1
 
         fun getPosition() = controller.getServoPosition(servo)

@@ -63,6 +63,11 @@ class Robot(private val opMode: RobotOpMode):
     override var relicLiftState: Boolean = false
     override val timer: ElapsedTime = ElapsedTime()
 
+    init {
+        relicLiftServo.position = 0.9
+        relicGrabServo.position = 0.5
+    }
+
     /// Initializes a DC motor.
     private fun initMotor(name: String, direction: Direction): DcMotor {
         val motor = hwMap.dcMotor[name]

@@ -22,7 +22,7 @@ abstract class AutonomyNearBase: RobotOpMode() {
     /// Detected VuMark.
     private var vuMark = RelicRecoveryVuMark.UNKNOWN
 
-    private var corectionHeading = 0
+    private var correctionHeading = 0
 
     override fun runOpMode() {
         robot.resetEncoders()
@@ -33,9 +33,15 @@ abstract class AutonomyNearBase: RobotOpMode() {
 
         waitForStart()
 
+        if (!opModeIsActive())
+            return
+
+        // Read the VuMark now.
+        readVuMark()
+
         detectJewel()
 
-        robot.driveDistance(when(directionSign){-1.0 -> -70.0 else -> -50.0},  0.0)
+        robot.driveDistance(when(directionSign){-1.0 -> 60.0 else -> -50.0},  0.0)
         robot.rotateTo(-85.0)
         robot.rotateTo(-85.0)
         driveToCryptoBox()
@@ -55,9 +61,6 @@ abstract class AutonomyNearBase: RobotOpMode() {
         // Wait for arm to lower.
         waitForMs(500)
 
-        // Read the VuMark now.
-        readVuMark()
-
         setStatus("Detecting jewel color")
         update()
 
@@ -69,7 +72,7 @@ abstract class AutonomyNearBase: RobotOpMode() {
 
         // Rotate in order to hit the jewel.
         val rotation = angle * directionSign
-        robot.rotateTo(rotation)
+        robot.rotateToPower(rotation, 0.4)
 
         setStatus("Lifting jewel servo arm")
         update()
@@ -83,6 +86,7 @@ abstract class AutonomyNearBase: RobotOpMode() {
         // Rotate back to straight direction.
         robot.rotateTo(0.0)
         waitForMs(200)
+
     }
 
     private fun readVuMark() {
@@ -95,10 +99,8 @@ abstract class AutonomyNearBase: RobotOpMode() {
         waitForMs(200)
 
         val timer = ElapsedTime()
-        while (opModeIsActive() && vuMark == RelicRecoveryVuMark.UNKNOWN && timer.milliseconds() < 1000) {
+        while (opModeIsActive() && vuMark == RelicRecoveryVuMark.UNKNOWN && timer.milliseconds() < 1500) {
             vuMark = robot.vuforia.vuMark
-
-            waitForMs(50)
         }
 
         setStatus("VuMark is $vuMark")
@@ -117,7 +119,7 @@ abstract class AutonomyNearBase: RobotOpMode() {
         robot.rotateTo(-90.0 * directionSign)
 
         robot.driveTime(2000, -0.5)
-        corectionHeading = robot.heading
+        correctionHeading = robot.heading
         waitForMs(200)
     }
 
@@ -128,8 +130,8 @@ abstract class AutonomyNearBase: RobotOpMode() {
         val distance = vuMark.distance
         robot.driveDistance(-distance, robot.heading.toDouble())
 
-        robot.rotateTo(when(directionSign){ 1.0 -> -0.0 else -> -(175.toDouble())})
-        robot.rotateTo(when(directionSign){ 1.0 -> -0.0 else -> -(175.toDouble())})
+        robot.rotateTo(when(directionSign){ 1.0 -> -0.0 else -> -172.0})
+        robot.rotateTo(when(directionSign){ 1.0 -> -0.0 else -> -172.0})
 
         waitForMs(200)
     }

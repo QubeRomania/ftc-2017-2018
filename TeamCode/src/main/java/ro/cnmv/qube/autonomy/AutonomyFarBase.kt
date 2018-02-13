@@ -65,7 +65,7 @@ abstract class AutonomyFarBase : RobotOpMode() {
 
         // Rotate in order to hit the jewel.
         val rotation = angle * directionSign
-        robot.rotateTo(rotation)
+        robot.rotateToPower(rotation, 0.4)
 
         setStatus("Lifting jewel servo arm")
         update()
