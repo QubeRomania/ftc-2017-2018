@@ -39,7 +39,7 @@ abstract class RobotOpMode: LinearOpMode(), OpModeAccess {
         gyro.calibrate()
 
         while (!isStopRequested && gyro.isCalibrating) {
-            sleep(100)
+            waitForMs(100)
         }
 
         setStatus("Finished calibrating gyro!")
