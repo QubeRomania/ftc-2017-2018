@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark
 import ro.cnmv.qube.core.RobotOpMode
 import ro.cnmv.qube.systems.Jewel
+import ro.cnmv.qube.systems.VuforiaImpl
 
 
 abstract class AutonomyNearBase: RobotOpMode() {
@@ -11,6 +12,10 @@ abstract class AutonomyNearBase: RobotOpMode() {
     companion object {
         const val JEWEL_HIT_ROTATION = 7.0
     }
+
+
+    // VUFORIA
+    val vuforia = VuforiaImpl(robot.hwMap.appContext)
 
     /// Sign of direction towards crypto box.
     protected abstract val directionSign: Double
@@ -39,14 +44,27 @@ abstract class AutonomyNearBase: RobotOpMode() {
         // Read the VuMark now.
         readVuMark()
 
+
+        if (!opModeIsActive())
+            return
+
         detectJewel()
+
+        if (!opModeIsActive())
+            return
 
         robot.driveDistance(when(directionSign){-1.0 -> 60.0 else -> -50.0},  0.0)
         robot.rotateTo(-85.0)
         robot.rotateTo(-85.0)
         driveToCryptoBox()
 
+        if (!opModeIsActive())
+            return
+
         approachCryptoBox()
+
+        if (!opModeIsActive())
+            return
 
         dropCube()
     }
@@ -93,14 +111,12 @@ abstract class AutonomyNearBase: RobotOpMode() {
         setStatus("Reading VuMark")
         update()
 
-        val vuforia = robot.vuforia
-
         vuforia.activate()
         waitForMs(200)
 
         val timer = ElapsedTime()
         while (opModeIsActive() && vuMark == RelicRecoveryVuMark.UNKNOWN && timer.milliseconds() < 1500) {
-            vuMark = robot.vuforia.vuMark
+            vuMark = vuforia.vuMark
         }
 
         setStatus("VuMark is $vuMark")

@@ -9,10 +9,8 @@ import ro.cnmv.qube.systems.*
 class Robot(private val opMode: RobotOpMode):
         DriveMotors, Gyro, Drive, CubesIntake, CubesLift, CubesDrop, Jewel, Glider, RelicGrabber, OpModeAccess by opMode {
 
-    private val hwMap = opMode.hardwareMap
+    val hwMap = opMode.hardwareMap
 
-    // VUFORIA
-    val vuforia = VuforiaImpl(hwMap.appContext)
 
     // MOTORS
     override val frontLeft: DcMotor = initMotor("frontLeftMotor", Direction.REVERSE)
