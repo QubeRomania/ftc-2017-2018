@@ -4,13 +4,20 @@ import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro
 import com.qualcomm.robotcore.hardware.*
 import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction
 import com.qualcomm.robotcore.util.ElapsedTime
+import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark
 import ro.cnmv.qube.systems.*
 
 class Robot(private val opMode: RobotOpMode):
         DriveMotors, Gyro, Drive, CubesIntake, CubesLift, CubesDrop, Jewel, Glider, RelicGrabber, OpModeAccess by opMode {
 
-    val hwMap = opMode.hardwareMap
+    private val hwMap = opMode.hardwareMap
 
+    // Create a dummy Vuforia implementation.
+    public var vuforia = object: Vuforia {
+        override fun activate() {}
+        override fun deactivate() {}
+        override val vuMark = RelicRecoveryVuMark.UNKNOWN
+    }
 
     // MOTORS
     override val frontLeft: DcMotor = initMotor("frontLeftMotor", Direction.REVERSE)
@@ -64,6 +71,10 @@ class Robot(private val opMode: RobotOpMode):
     init {
         relicLiftServo.position = 0.9
         relicGrabServo.position = 0.5
+    }
+
+    public fun initVuforia() {
+        vuforia = VuforiaImpl(hwMap.appContext)
     }
 
     /// Initializes a DC motor.

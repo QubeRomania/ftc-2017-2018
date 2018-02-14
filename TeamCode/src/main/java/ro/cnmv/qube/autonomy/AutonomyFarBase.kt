@@ -4,17 +4,11 @@ import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark
 import ro.cnmv.qube.core.RobotOpMode
 import ro.cnmv.qube.systems.Jewel
-import ro.cnmv.qube.systems.VuforiaImpl
 
 abstract class AutonomyFarBase : RobotOpMode() {
     companion object {
         const val JEWEL_HIT_ROTATION = 7.0
     }
-
-
-    // VUFORIA
-    val vuforia = VuforiaImpl(robot.hwMap.appContext)
-
 
     /// Sign of direction towards crypto box.
     protected abstract val directionSign: Double
@@ -29,6 +23,8 @@ abstract class AutonomyFarBase : RobotOpMode() {
     private var cryptoBoxDirection = 90.0
 
     override fun runOpMode() {
+        robot.initVuforia()
+
         robot.resetEncoders()
 
         if (!opModeIsActive())
@@ -103,6 +99,8 @@ abstract class AutonomyFarBase : RobotOpMode() {
     private fun readVuMark() {
         setStatus("Reading VuMark")
         update()
+
+        val vuforia = robot.vuforia
 
         vuforia.activate()
         waitForMs(200)
