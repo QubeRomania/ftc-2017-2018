@@ -8,8 +8,10 @@ abstract class AutonomyBase: RobotOpMode() {
 
         waitForStart()
 
-        if (!opModeIsActive())
+        if (!opModeIsActive()) {
+            robot.stop()
             return
+        }
 
         postStart()
     }

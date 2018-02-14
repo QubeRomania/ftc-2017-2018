@@ -69,6 +69,7 @@ class Robot(private val opMode: RobotOpMode):
         relicGrabServo.position = 0.5
     }
 
+    // Initializes Vuforia in a new thread to speed up robot start up.
     fun initVuforia() {
         // Force the lazy initializer to run in a separate thread.
         object: Thread() {
@@ -76,6 +77,17 @@ class Robot(private val opMode: RobotOpMode):
                 vuforia.deactivate()
             }
         }.start()
+    }
+
+    // Stops the robot by shutting down all the hardware.
+    fun stop() {
+        stopMotors()
+
+        intakeLeft.power = 0.0
+        intakeRight.power = 0.0
+
+        lift(0.0)
+        drop(0.0)
     }
 
     /// Initializes a DC motor.
