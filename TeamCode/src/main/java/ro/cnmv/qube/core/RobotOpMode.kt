@@ -48,6 +48,8 @@ abstract class RobotOpMode: LinearOpMode(), OpModeAccess {
 
     protected fun waitForMs(millis: Long) {
         val timer = ElapsedTime()
-        while (opModeIsActive() && timer.milliseconds() <= millis);
+        while (opModeIsActive() && timer.milliseconds() <= millis)
+            // Allow other threads to run.
+            idle()
     }
 }
