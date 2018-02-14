@@ -12,11 +12,8 @@ class Robot(private val opMode: RobotOpMode):
 
     private val hwMap = opMode.hardwareMap
 
-    // Create a dummy Vuforia implementation.
-    public var vuforia = object: Vuforia {
-        override fun activate() {}
-        override fun deactivate() {}
-        override val vuMark = RelicRecoveryVuMark.UNKNOWN
+    val vuforia: Vuforia by lazy {
+        VuforiaImpl(hwMap.appContext)
     }
 
     // MOTORS
@@ -61,7 +58,6 @@ class Robot(private val opMode: RobotOpMode):
 
 
     // RELIC
-
     override var relicLiftTime: Long = 0
     override var relicGrabTime: Long = 0
     override var relicGrabState: Boolean = false
@@ -73,8 +69,13 @@ class Robot(private val opMode: RobotOpMode):
         relicGrabServo.position = 0.5
     }
 
-    public fun initVuforia() {
-        vuforia = VuforiaImpl(hwMap.appContext)
+    fun initVuforia() {
+        // Force the lazy initializer to run in a separate thread.
+        object: Thread() {
+            override fun run() {
+                vuforia.deactivate()
+            }
+        }.start()
     }
 
     /// Initializes a DC motor.
