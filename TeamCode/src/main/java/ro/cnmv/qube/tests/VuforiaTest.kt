@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark
 
 import ro.cnmv.qube.core.RobotOpMode
+import ro.cnmv.qube.systems.VuforiaImpl
 
 /// Tests VuforiaImpl's capability to detect the pictograph's pattern.
 @Autonomous(name = "Vuforia Test", group = "Tests")
@@ -11,7 +12,8 @@ class VuforiaTest: RobotOpMode() {
     override fun runOpMode() {
         waitForStart()
 
-        val vuforia = robot.vuforia
+
+        val vuforia = VuforiaImpl(robot.hwMap.appContext)
 
         vuforia.activate()
 

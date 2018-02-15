@@ -17,7 +17,7 @@ interface RelicGrabber{
     val timer: ElapsedTime
 
     fun grabRelic(gp: Gamepad){
-        if(gp.left_bumper && timer.milliseconds() - relicGrabTime > 1000){
+        if(gp.a && timer.milliseconds() - relicGrabTime > 1000){
             relicGrabState = !relicGrabState
             relicGrabTime = timer.milliseconds().toLong()
         }
@@ -34,6 +34,6 @@ interface RelicGrabber{
             relicLiftTime = timer.milliseconds().toLong()
         }
 
-        relicLiftServo.position = when(relicLiftState){true -> 1.0 else -> 0.0}
+        relicLiftServo.position = when(relicLiftState){true -> 1.0 else -> 0.1}
     }
 }

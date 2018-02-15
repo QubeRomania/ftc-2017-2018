@@ -12,6 +12,9 @@ class Robot(private val opMode: RobotOpMode):
     val hwMap = opMode.hardwareMap
 
 
+    // VUFORIA
+    val vuforia = VuforiaImpl(hwMap.appContext)
+
     // MOTORS
     override val frontLeft: DcMotor = initMotor("frontLeftMotor", Direction.REVERSE)
     override val frontRight: DcMotor = initMotor("frontRightMotor", Direction.FORWARD)
@@ -51,10 +54,13 @@ class Robot(private val opMode: RobotOpMode):
     override val jewServo = initServo("jewServo")
     override val relicGrabServo = initServo("relicGrabServo")
     override val relicLiftServo = initServo("relicLiftServo")
+    override val gliderLockServo = initServo("gliderLockServo")
 
 
     // RELIC
 
+    override var gliderLockTime: Long = 0
+    override var gliderLockState: Boolean = true
     override var relicLiftTime: Long = 0
     override var relicGrabTime: Long = 0
     override var relicGrabState: Boolean = false

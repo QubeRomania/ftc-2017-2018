@@ -13,9 +13,8 @@ abstract class AutonomyNearBase: RobotOpMode() {
         const val JEWEL_HIT_ROTATION = 7.0
     }
 
-
     // VUFORIA
-    val vuforia = VuforiaImpl(robot.hwMap.appContext)
+    val vuforia = robot.vuforia
 
     /// Sign of direction towards crypto box.
     protected abstract val directionSign: Double
@@ -44,27 +43,14 @@ abstract class AutonomyNearBase: RobotOpMode() {
         // Read the VuMark now.
         readVuMark()
 
-
-        if (!opModeIsActive())
-            return
-
         detectJewel()
-
-        if (!opModeIsActive())
-            return
 
         robot.driveDistance(when(directionSign){-1.0 -> 60.0 else -> -50.0},  0.0)
         robot.rotateTo(-85.0)
         robot.rotateTo(-85.0)
         driveToCryptoBox()
 
-        if (!opModeIsActive())
-            return
-
         approachCryptoBox()
-
-        if (!opModeIsActive())
-            return
 
         dropCube()
     }
