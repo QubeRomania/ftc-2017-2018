@@ -15,7 +15,7 @@ abstract class RobotOpMode: LinearOpMode(), OpModeAccess {
     }
 
     /// The robot's hardware.
-    protected val robot: Robot by lazy {
+    protected val robot by lazy {
         if (hardwareMap == null)
             throw RuntimeException("Robot not yet initialized!")
 
@@ -39,7 +39,7 @@ abstract class RobotOpMode: LinearOpMode(), OpModeAccess {
         gyro.calibrate()
 
         while (!isStopRequested && gyro.isCalibrating) {
-            sleep(100)
+            waitForMs(100)
         }
 
         setStatus("Finished calibrating gyro!")
@@ -48,6 +48,8 @@ abstract class RobotOpMode: LinearOpMode(), OpModeAccess {
 
     protected fun waitForMs(millis: Long) {
         val timer = ElapsedTime()
-        while (opModeIsActive() && timer.milliseconds() <= millis);
+        while (opModeIsActive() && timer.milliseconds() <= millis)
+            // Allow other threads to run.
+            idle()
     }
 }
