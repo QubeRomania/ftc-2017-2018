@@ -4,6 +4,9 @@ import ro.cnmv.qube.core.RobotOpMode
 
 abstract class AutonomyBase: RobotOpMode() {
     override fun runOpMode() {
+        if (hardwareMap == null)
+            throw RuntimeException("Hardware map has not been initialized!")
+
         postInit()
 
         waitForStart()
@@ -17,9 +20,9 @@ abstract class AutonomyBase: RobotOpMode() {
     }
 
     private fun postInit() {
-        robot.initVuforia()
-
         robot.resetEncoders()
+
+        robot.initVuforia()
 
         calibrateGyro()
     }

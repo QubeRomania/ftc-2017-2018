@@ -15,7 +15,7 @@ abstract class RobotOpMode: LinearOpMode(), OpModeAccess {
     }
 
     /// The robot's hardware.
-    protected val robot: Robot by lazy {
+    protected val robot by lazy {
         if (hardwareMap == null)
             throw RuntimeException("Robot not yet initialized!")
 
