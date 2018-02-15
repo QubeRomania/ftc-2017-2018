@@ -12,8 +12,10 @@ class Robot(private val opMode: RobotOpMode):
     val hwMap = opMode.hardwareMap
 
 
-    // VUFORIA
+
     val vuforia = VuforiaImpl(hwMap.appContext)
+
+
 
     // MOTORS
     override val frontLeft: DcMotor = initMotor("frontLeftMotor", Direction.REVERSE)

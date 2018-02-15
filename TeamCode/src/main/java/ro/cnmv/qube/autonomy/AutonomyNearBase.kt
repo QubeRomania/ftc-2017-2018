@@ -13,9 +13,6 @@ abstract class AutonomyNearBase: RobotOpMode() {
         const val JEWEL_HIT_ROTATION = 7.0
     }
 
-    // VUFORIA
-    val vuforia = robot.vuforia
-
     /// Sign of direction towards crypto box.
     protected abstract val directionSign: Double
 
@@ -29,6 +26,7 @@ abstract class AutonomyNearBase: RobotOpMode() {
     private var correctionHeading = 0
 
     override fun runOpMode() {
+        robot.relicLiftServo.position = 0.0
         robot.resetEncoders()
 
         // Adjust the crypto box's direction for an error.
@@ -96,6 +94,8 @@ abstract class AutonomyNearBase: RobotOpMode() {
     private fun readVuMark() {
         setStatus("Reading VuMark")
         update()
+
+        val vuforia = robot.vuforia
 
         vuforia.activate()
         waitForMs(200)

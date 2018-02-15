@@ -39,6 +39,6 @@ interface Jewel: OpModeAccess {
     }
 
     companion object {
-        const val LOWER_POSITION = 0.72
+        const val LOWER_POSITION = 0.70
     }
 }
