@@ -1,6 +1,7 @@
 package ro.cnmv.qube.core
 
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor
 import com.qualcomm.robotcore.hardware.*
 import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction
 import com.qualcomm.robotcore.util.ElapsedTime
@@ -8,7 +9,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark
 import ro.cnmv.qube.systems.*
 
 class Robot(private val opMode: RobotOpMode):
-        DriveMotors, Gyro, Drive, CubesIntake, CubesLift, CubesDrop, Jewel, Glider, RelicGrabber, OpModeAccess by opMode {
+        DriveMotors, Gyro, Drive, CryptoAlign, CubesIntake, CubesLift, CubesDrop, Jewel, Glider, RelicGrabber, OpModeAccess by opMode {
 
     private val hwMap = opMode.hardwareMap
 
@@ -46,6 +47,7 @@ class Robot(private val opMode: RobotOpMode):
     // SENSORS
     override val gyro = initGyro()
     override val colorSensor = initColorSensor()
+    override val backRangeSensor = hwMap.get(ModernRoboticsI2cRangeSensor::class.java, "backRangeSensor")!!
 
     // SERVOS
     override val leftLiftServo = initCRServo("leftLiftServo", Direction.FORWARD)
@@ -56,7 +58,6 @@ class Robot(private val opMode: RobotOpMode):
     override val relicGrabServo = initServo("relicGrabServo")
     override val relicLiftServo = initServo("relicLiftServo")
     override val gliderLockServo = initServo("gliderLockServo")
-
 
     // RELIC
     override var gliderLockTime: Long = 0
