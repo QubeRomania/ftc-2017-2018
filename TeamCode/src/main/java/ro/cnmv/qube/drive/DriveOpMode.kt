@@ -27,6 +27,7 @@ class DriveOpMode: RobotOpMode() {
             if(gamepad1.x && timer.milliseconds() - jewelLastTime > 1000){
                 jewelState = !jewelState
                 jewelLastTime = timer.milliseconds().toLong()
+                robot.jewServo.position = when(jewelState){true -> 1.0 else -> 0.0}
             }
             // DRIVE
             robot.driveWithGamepad(gamepad1)

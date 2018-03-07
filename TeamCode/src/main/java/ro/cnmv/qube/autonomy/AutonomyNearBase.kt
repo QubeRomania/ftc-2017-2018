@@ -157,7 +157,7 @@ abstract class AutonomyNearBase: AutonomyBase() {
 
         robot.driveDistance(5.0, robot.heading.toDouble())
 
-        robot.driveDistance(-17.0, robot.heading.toDouble())
+        robot.driveTime(2000, -0.4)
 
         robot.driveDistance(3.0, robot.heading.toDouble())
     }
