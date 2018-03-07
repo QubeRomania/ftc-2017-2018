@@ -4,16 +4,18 @@ import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro
 import com.qualcomm.robotcore.hardware.*
 import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction
 import com.qualcomm.robotcore.util.ElapsedTime
+import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark
 import ro.cnmv.qube.systems.*
 
 class Robot(private val opMode: RobotOpMode):
         DriveMotors, Gyro, Drive, CubesIntake, CubesLift, CubesDrop, Jewel, Glider, RelicGrabber, OpModeAccess by opMode {
 
-    val hwMap = opMode.hardwareMap
-
+    private val hwMap = opMode.hardwareMap
 
     // VUFORIA
-    val vuforia = VuforiaImpl(hwMap.appContext)
+    val vuforia: Vuforia by lazy {
+        VuforiaImpl(hwMap.appContext)
+    }
 
     // MOTORS
     override val frontLeft: DcMotor = initMotor("frontLeftMotor", Direction.REVERSE)
@@ -58,7 +60,6 @@ class Robot(private val opMode: RobotOpMode):
 
 
     // RELIC
-
     override var gliderLockTime: Long = 0
     override var gliderLockState: Boolean = true
     override var relicLiftTime: Long = 0
@@ -70,6 +71,27 @@ class Robot(private val opMode: RobotOpMode):
     init {
         relicLiftServo.position = 0.9
         relicGrabServo.position = 0.5
+    }
+
+    // Initializes Vuforia in a new thread to speed up robot start up.
+    fun initVuforia() {
+        // Force the lazy initializer to run in a separate thread.
+        object: Thread() {
+            override fun run() {
+                vuforia.deactivate()
+            }
+        }.start()
+    }
+
+    // Stops the robot by shutting down all the hardware.
+    fun stop() {
+        stopMotors()
+
+        intakeLeft.power = 0.0
+        intakeRight.power = 0.0
+
+        lift(0.0)
+        drop(0.0)
     }
 
     /// Initializes a DC motor.
