@@ -22,6 +22,8 @@ abstract class AutonomyBase: RobotOpMode() {
     private fun postInit() {
         robot.resetEncoders()
 
+        robot.relicLiftServo.position = 0.0
+
         robot.initVuforia()
 
         calibrateGyro()

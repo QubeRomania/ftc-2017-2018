@@ -10,10 +10,11 @@ import ro.cnmv.qube.systems.VuforiaImpl
 @Autonomous(name = "Vuforia Test", group = "Tests")
 class VuforiaTest: RobotOpMode() {
     override fun runOpMode() {
+        robot.initVuforia()
+
         waitForStart()
 
-
-        val vuforia = VuforiaImpl(robot.hwMap.appContext)
+        val vuforia = robot.vuforia
 
         vuforia.activate()
 
