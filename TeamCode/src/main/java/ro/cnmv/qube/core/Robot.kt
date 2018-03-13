@@ -28,8 +28,6 @@ class Robot(private val opMode: RobotOpMode):
     override val intakeLeft: DcMotor = initMotor("leftIntakeMotor", Direction.FORWARD)
     override val intakeRight: DcMotor = initMotor("rightIntakeMotor", Direction.REVERSE)
 
-    override val intakeOpen: DcMotor = initMotor("intakeOpenMotor", Direction.FORWARD)
-
     override val gliderMotor: DcMotor = initMotor("gliderMotor", Direction.FORWARD)
 
     /// Robot's battery voltage in Volts.

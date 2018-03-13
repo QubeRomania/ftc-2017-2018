@@ -6,16 +6,6 @@ import com.qualcomm.robotcore.hardware.Gamepad
 interface CubesIntake {
     val intakeLeft: DcMotor
     val intakeRight: DcMotor
-    val intakeOpen: DcMotor
-
-    /// Opens and closes the intake funnel.
-    fun openWithGamepad(gp: Gamepad) {
-        intakeOpen.power = when {
-            gp.x -> 1.0
-            gp.y -> -1.0
-            else -> 0.0
-        }
-    }
 
     /// Controls cube intake.
     fun intakeWithGamepad(gp: Gamepad) {

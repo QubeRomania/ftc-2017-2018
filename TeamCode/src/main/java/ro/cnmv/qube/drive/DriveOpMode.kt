@@ -47,9 +47,6 @@ class DriveOpMode: RobotOpMode() {
                 else -> robot.gliderWithGamepad(gamepad2)
             }
 
-            // CUBES OPEN
-            robot.openWithGamepad(gamepad2)
-
             // RELIC
             robot.grabRelic(gamepad1)
             robot.liftRelic(gamepad2)
