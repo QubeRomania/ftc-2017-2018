@@ -1,11 +1,13 @@
 package ro.cnmv.qube.systems
 
 import com.qualcomm.robotcore.hardware.CRServo
+import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.Gamepad
 
 interface CubesLift {
-    val leftLiftServo: CRServo
-    val rightLiftServo: CRServo
+//    val leftLiftServo: CRServo
+//    val rightLiftServo: CRServo
+    val liftMotor: DcMotor
 
     var power: Double
 
@@ -21,7 +23,8 @@ interface CubesLift {
     }
 
     fun lift(power: Double) {
-        leftLiftServo.power = power
-        rightLiftServo.power = power
+//        leftLiftServo.power = power
+//        rightLiftServo.power = power
+        liftMotor.power = power
     }
 }

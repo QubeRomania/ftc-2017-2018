@@ -30,6 +30,8 @@ class Robot(private val opMode: RobotOpMode):
 
     override val gliderMotor: DcMotor = initMotor("gliderMotor", Direction.FORWARD)
 
+    override val liftMotor: DcMotor = initMotor("liftMotor", Direction.FORWARD)
+
     /// Robot's battery voltage in Volts.
     val voltage by lazy {
         val voltageSensor = hwMap.voltageSensor.first()
@@ -49,8 +51,8 @@ class Robot(private val opMode: RobotOpMode):
     override val backRangeSensor = hwMap.get(ModernRoboticsI2cRangeSensor::class.java, "backRangeSensor")!!
 
     // SERVOS
-    override val leftLiftServo = initCRServo("leftLiftServo", Direction.FORWARD)
-    override val rightLiftServo = initCRServo("rightLiftServo", Direction.REVERSE)
+//    override val leftLiftServo = initCRServo("leftLiftServo", Direction.FORWARD)
+//    override val rightLiftServo = initCRServo("rightLiftServo", Direction.REVERSE)
     override val leftDropServo = initCRServo("leftDropServo", Direction.FORWARD)
     override val rightDropServo = initCRServo("rightDropServo", Direction.REVERSE)
     override val jewServo = initServo("jewServo")
