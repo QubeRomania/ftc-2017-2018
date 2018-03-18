@@ -95,7 +95,7 @@ class Robot(private val opMode: RobotOpMode):
         drop(0.0)
     }
 
-    /// Initializes a DC motor.
+    // Initializes a DC motor.
     private fun initMotor(name: String, direction: Direction): DcMotor {
         val motor = hwMap.dcMotor[name]
 

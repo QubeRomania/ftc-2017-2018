@@ -13,10 +13,9 @@ interface CubesLift {
 
     fun liftWithGamepad(gp: Gamepad) {
         power = when {
-            gp.a -> 1.0
-            gp.b -> -1.0
-            gp.x -> 0.0
-            else -> power
+            gp.a -> -1.0
+            gp.b -> 1.0
+            else -> 0.0
         }
 
         lift(power)
