@@ -6,6 +6,7 @@ import ro.cnmv.qube.core.OpModeAccess
 
 interface Jewel: OpModeAccess {
     val jewServo: Servo
+    val jewHitServo: Servo
     val colorSensor: NormalizedColorSensor
 
     enum class Color {
@@ -36,6 +37,22 @@ interface Jewel: OpModeAccess {
         } else {
             jewServo.position = 0.0
         }
+    }
+
+    fun dropJewel(color: Color) {
+        jewHitServo.position = 0.3
+        waitMillis(200)
+        openJewelServo(true)
+
+        if(jewelColor == color) jewHitServo.position = 0.0
+        else jewHitServo.position = 0.6
+
+        waitMillis(200)
+
+        jewHitServo.position = 0.3
+
+        openJewelServo(false)
+        jewHitServo.position = 0.0
     }
 
     companion object {

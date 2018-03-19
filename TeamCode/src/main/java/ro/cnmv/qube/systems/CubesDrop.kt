@@ -1,6 +1,8 @@
 package ro.cnmv.qube.systems
 
 import com.qualcomm.robotcore.hardware.CRServo
+import com.qualcomm.robotcore.hardware.CRServoImpl
+import com.qualcomm.robotcore.hardware.CRServoImplEx
 import com.qualcomm.robotcore.hardware.Gamepad
 
 interface CubesDrop {
