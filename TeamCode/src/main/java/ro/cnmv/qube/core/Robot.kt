@@ -39,10 +39,21 @@ class Robot(private val opMode: RobotOpMode):
     // SERVOS
 //    override val leftLiftServo = initCRServo("leftLiftServo", Direction.FORWARD)
 //    override val rightLiftServo = initCRServo("rightLiftServo", Direction.REVERSE)
-    override val leftDropServo = initCRServo("leftDropServo", Direction.FORWARD)
-    override val rightDropServo = initCRServo("rightDropServo", Direction.REVERSE)
+    override val leftDropServo = initServo("leftDropServo")
+    override val rightDropServo = initServo("rightDropServo")
     override val jewServo = initServo("jewServo")
     override val jewHitServo: Servo = initServo("jewHitServo")
+
+    init {
+        val LEFT_DOWN_POSITION = 0.0
+        val LEFT_UP_POSITION = 1.0
+        val RIGHT_DOWN_POSITION = 133.0 / 255.0
+        val RIGHT_UP_POSITION = 240.0 / 255.0
+
+        leftDropServo.scaleRange(LEFT_DOWN_POSITION, LEFT_UP_POSITION)
+        leftDropServo.direction = Servo.Direction.REVERSE
+        rightDropServo.scaleRange(RIGHT_DOWN_POSITION, RIGHT_UP_POSITION)
+    }
 
     // Initializes Vuforia in a new thread to speed up robot start up.
     fun initVuforia() {
