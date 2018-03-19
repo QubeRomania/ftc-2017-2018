@@ -5,12 +5,10 @@ import ro.cnmv.qube.core.RobotOpMode
 
 @Autonomous(name = "Auto Strafing Test", group = "Test")
 class AutoStrafingTest: RobotOpMode() {
-    val targetDistance = 20.0
-
+    private val targetDistance = 20.0
 
     override fun runOpMode() {
         calibrateGyro()
-        robot.relicLiftServo.position = 0.0
 
         waitForStart()
 

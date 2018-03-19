@@ -9,7 +9,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark
 import ro.cnmv.qube.systems.*
 
 class Robot(private val opMode: RobotOpMode):
-        DriveMotors, Gyro, Drive, CryptoAlign, CubesIntake, CubesLift, CubesDrop, Jewel, Glider, RelicGrabber, OpModeAccess by opMode {
+        DriveMotors, Gyro, Drive, CryptoAlign, CubesIntake, CubesLift, CubesDrop, Jewel, OpModeAccess by opMode {
 
     private val hwMap = opMode.hardwareMap
 
@@ -27,8 +27,6 @@ class Robot(private val opMode: RobotOpMode):
 
     override val intakeLeft: DcMotor = initMotor("leftIntakeMotor", Direction.FORWARD)
     override val intakeRight: DcMotor = initMotor("rightIntakeMotor", Direction.REVERSE)
-
-    override val gliderMotor: DcMotor = initMotor("gliderMotor", Direction.FORWARD)
 
     override val liftMotor: DcMotor = initMotor("liftMotor", Direction.FORWARD)
 
@@ -56,23 +54,6 @@ class Robot(private val opMode: RobotOpMode):
     override val leftDropServo = initCRServo("leftDropServo", Direction.FORWARD)
     override val rightDropServo = initCRServo("rightDropServo", Direction.REVERSE)
     override val jewServo = initServo("jewServo")
-    override val relicGrabServo = initServo("relicGrabServo")
-    override val relicLiftServo = initServo("relicLiftServo")
-    override val gliderLockServo = initServo("gliderLockServo")
-
-    // RELIC
-    override var gliderLockTime: Long = 0
-    override var gliderLockState: Boolean = true
-    override var relicLiftTime: Long = 0
-    override var relicGrabTime: Long = 0
-    override var relicGrabState: Boolean = false
-    override var relicLiftState: Boolean = false
-    override val timer: ElapsedTime = ElapsedTime()
-
-    init {
-        relicLiftServo.position = 0.9
-        relicGrabServo.position = 0.5
-    }
 
     // Initializes Vuforia in a new thread to speed up robot start up.
     fun initVuforia() {
