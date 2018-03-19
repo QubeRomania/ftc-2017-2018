@@ -31,17 +31,6 @@ class Robot(private val opMode: RobotOpMode):
 
     override val liftMotor: DcMotor = initMotor("liftMotor", Direction.FORWARD)
 
-    /// Robot's battery voltage in Volts.
-    val voltage by lazy {
-        val voltageSensor = hwMap.voltageSensor.first()
-
-        // Read voltage only once, when starting OpMode.
-        voltageSensor.voltage
-    }
-
-    val voltagePowerConstant
-        get() = 12.0 / voltage
-
     override var power: Double = 0.0
 
     // SENSORS
