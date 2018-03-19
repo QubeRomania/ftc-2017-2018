@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction
 import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark
 import ro.cnmv.qube.systems.*
+import ro.cnmv.qube.systems.VuforiaImpl
 
 class Robot(private val opMode: RobotOpMode):
         DriveMotors, Gyro, Drive, CryptoAlign, CubesIntake, CubesLift, CubesDrop, Jewel, OpModeAccess by opMode {
