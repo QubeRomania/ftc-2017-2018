@@ -29,33 +29,31 @@ interface Jewel: OpModeAccess {
     fun openJewelServo(open: Boolean) {
         if (open) {
             var position = 0.0
-            while (position <= LOWER_POSITION) {
-                position += 0.1
+            while (position >= 0.0) {
+                position -= 0.1
                 jewServo.position = position
                 waitMillis(200)
             }
         } else {
-            jewServo.position = 0.0
+            jewServo.position = 1.0
         }
     }
 
     fun dropJewel(color: Color) {
-        jewHitServo.position = 0.3
+        val MIDDLE_POSITION = 119.0 / 255.0
+
+        jewHitServo.position = MIDDLE_POSITION
         waitMillis(200)
         openJewelServo(true)
 
         if(jewelColor == color) jewHitServo.position = 0.0
-        else jewHitServo.position = 0.6
+        else jewHitServo.position = 1.0
 
         waitMillis(200)
 
-        jewHitServo.position = 0.3
+        jewHitServo.position = MIDDLE_POSITION
 
         openJewelServo(false)
         jewHitServo.position = 0.0
-    }
-
-    companion object {
-        const val LOWER_POSITION = 0.70
     }
 }
