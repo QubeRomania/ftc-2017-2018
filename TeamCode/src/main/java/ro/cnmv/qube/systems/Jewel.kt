@@ -9,6 +9,13 @@ interface Jewel: OpModeAccess {
     val jewHitServo: Servo
     val colorSensor: NormalizedColorSensor
 
+    companion object {
+        const val JEWEL_ARM_TOP_POSITION = 200.0 / 255.0
+        const val JEWEL_ARM_BOTTOM_POSITION = 0.0 / 255.0
+
+        const val JEWEL_HIT_MIDDLE_POSITION = 119.0 / 255.0
+    }
+
     enum class Color {
         RED,
         BLUE,
@@ -19,6 +26,10 @@ interface Jewel: OpModeAccess {
         get() {
             val color = colorSensor.normalizedColors
 
+            tele.addData("Red", color.red)
+            tele.addData("Blue", color.blue)
+            tele.update()
+
             return if (color.blue > color.red) {
                 Color.BLUE
             } else {
@@ -28,32 +39,35 @@ interface Jewel: OpModeAccess {
 
     fun openJewelServo(open: Boolean) {
         if (open) {
-            var position = 0.0
-            while (position >= 0.0) {
+            var position = jewServo.position
+            while (position >= JEWEL_ARM_BOTTOM_POSITION) {
                 position -= 0.1
                 jewServo.position = position
                 waitMillis(200)
             }
         } else {
-            jewServo.position = 1.0
+            jewServo.position = JEWEL_ARM_TOP_POSITION
         }
     }
 
-    fun dropJewel(color: Color) {
-        val MIDDLE_POSITION = 119.0 / 255.0
-
-        jewHitServo.position = MIDDLE_POSITION
+    fun dropJewel(ourColor: Color) {
+        jewHitServo.position = JEWEL_HIT_MIDDLE_POSITION
         waitMillis(200)
         openJewelServo(true)
 
-        if(jewelColor == color) jewHitServo.position = 0.0
+        waitMillis(800)
+
+        if(jewelColor == ourColor) jewHitServo.position = 0.0
         else jewHitServo.position = 1.0
 
-        waitMillis(200)
+        waitMillis(400)
 
-        jewHitServo.position = MIDDLE_POSITION
+        jewHitServo.position = JEWEL_HIT_MIDDLE_POSITION
 
         openJewelServo(false)
-        jewHitServo.position = 0.0
+
+        jewHitServo.position = 1.0
+
+        waitMillis(200)
     }
 }

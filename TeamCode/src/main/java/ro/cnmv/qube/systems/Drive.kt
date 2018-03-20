@@ -77,16 +77,17 @@ interface Drive: DriveMotors, Gyro, OpModeAccess {
         }
 
         // Go fast until the last 30 cm.
-        pidDrive(0.7, 30.0)
+        pidDrive(0.5, 30.0)
 
         // Precise PID.
-        pidDrive(0.3, 0.0)
+        pidDrive(0.25, 0.0)
 
         stopMotors()
     }
 
     fun rotateTo(target: Double) {
-        rotateToPower(target, 0.3)
+        rotateToPower(target, 0.2)
+        rotateToPower(target, 0.2)
     }
 
     fun rotateToPower(target: Double, rotatePower: Double) {

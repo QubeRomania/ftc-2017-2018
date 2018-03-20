@@ -5,16 +5,14 @@ import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.Gamepad
 
 interface CubesLift {
-//    val leftLiftServo: CRServo
-//    val rightLiftServo: CRServo
     val liftMotor: DcMotor
 
     var power: Double
 
     fun liftWithGamepad(gp: Gamepad) {
         power = when {
-            gp.a -> -1.0
-            gp.b -> 1.0
+            gp.a -> -0.5
+            gp.b -> 0.5
             else -> 0.0
         }
 
@@ -22,8 +20,6 @@ interface CubesLift {
     }
 
     fun lift(power: Double) {
-//        leftLiftServo.power = power
-//        rightLiftServo.power = power
         liftMotor.power = power
     }
 }

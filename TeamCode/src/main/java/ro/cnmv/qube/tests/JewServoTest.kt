@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import ro.cnmv.qube.core.RobotOpMode
 import ro.cnmv.qube.systems.Jewel
 
-@Autonomous(name = "JewServoTest", group = "Tests")
+@Autonomous(name = "Jewel Servo Test", group = "Tests")
 class JewServoTest: RobotOpMode() {
     override fun runOpMode(){
         waitForStart()

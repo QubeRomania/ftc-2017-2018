@@ -8,6 +8,7 @@ class ServoTest: RobotOpMode() {
     override fun runOpMode() {
         waitForStart()
 
+                /*
         val controller = robot.jewServo.controller
         val servo = 1
 
@@ -20,6 +21,11 @@ class ServoTest: RobotOpMode() {
         while (opModeActive) {
             setPosition(position)
         }
+        */
+
+        robot.jewHitServo.position = 0.0
+        waitForMs(500)
+        robot.jewHitServo.position = 1.0
     }
 
 }
