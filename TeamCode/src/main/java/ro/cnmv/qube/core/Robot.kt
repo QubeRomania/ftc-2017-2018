@@ -55,6 +55,8 @@ class Robot(private val opMode: RobotOpMode):
         leftDropServo.direction = Servo.Direction.REVERSE
         rightDropServo.scaleRange(RIGHT_DOWN_POSITION, RIGHT_UP_POSITION)
         rightDropServo.direction = Servo.Direction.FORWARD
+
+        liftMotor.mode = DcMotor.RunMode.RUN_USING_ENCODER
     }
 
     // Initializes Vuforia in a new thread to speed up robot start up.
