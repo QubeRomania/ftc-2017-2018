@@ -14,7 +14,7 @@ abstract class AutonomyNearBase: AutonomyBase() {
         robot.dropJewel(color)
 
         robot.driveDistance(when(directionSign){-1.0 -> 58.0 else -> -50.0},  0.0)
-        robot.rotateTo(-90.0)
+        robot.rotateTo(-87.0)
         robot.rotateTo(-90.0)
 
         driveToCryptoBox()

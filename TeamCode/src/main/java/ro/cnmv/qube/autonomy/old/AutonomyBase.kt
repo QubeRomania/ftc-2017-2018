@@ -73,9 +73,8 @@ abstract class AutonomyBase: RobotOpMode() {
     protected fun dropCube() {
         setStatus("Dropping cube")
         update()
-
         robot.dropCubesAuto(true)
-        waitForMs(900)
+        waitForMs(1500)
         robot.dropCubesAuto(false)
 
         waitForMs(1000)
