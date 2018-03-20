@@ -53,8 +53,11 @@ class Robot(private val opMode: RobotOpMode):
 
         leftDropServo.scaleRange(LEFT_DOWN_POSITION, LEFT_UP_POSITION)
         leftDropServo.direction = Servo.Direction.REVERSE
+        leftDropServo.position = 0.0
+
         rightDropServo.scaleRange(RIGHT_DOWN_POSITION, RIGHT_UP_POSITION)
         rightDropServo.direction = Servo.Direction.FORWARD
+        rightDropServo.position = 0.0
 
         liftMotor.mode = DcMotor.RunMode.RUN_USING_ENCODER
     }
