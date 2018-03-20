@@ -8,6 +8,6 @@ class AutonomyFarRed: AutonomyFarBase() {
     override val directionSign = -1.0
     override val color = Jewel.Color.RED
     override val distanceLeft = 103.44
-    override val distanceCenter = 80.0
+    override val distanceCenter = 73.5
     override val distanceRight = 61.0
 }
