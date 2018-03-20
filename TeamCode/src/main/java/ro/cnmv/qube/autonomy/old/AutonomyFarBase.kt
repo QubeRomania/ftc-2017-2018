@@ -1,23 +1,19 @@
-package ro.cnmv.qube.autonomy
+package ro.cnmv.qube.autonomy.old
 
-import com.qualcomm.robotcore.util.ElapsedTime
-import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark
 import ro.cnmv.qube.systems.Jewel
 
-abstract class AutonomyNearBase: AutonomyBase() {
+abstract class AutonomyFarBase: AutonomyBase() {
     /// Sign of direction towards crypto box.
     protected abstract val directionSign: Double
     protected abstract val color: Jewel.Color
 
+    // Adjust the crypto box's direction for an error.
+    private var cryptoBoxDirection = 85.0
+
     override fun postStart() {
-        // Read the VuMark now.
         readVuMark()
 
         robot.dropJewel(color)
-
-        robot.driveDistance(when(directionSign){-1.0 -> 60.0 else -> -50.0},  0.0)
-        robot.rotateTo(-85.0)
-        robot.rotateTo(-85.0)
 
         driveToCryptoBox()
 
@@ -30,11 +26,11 @@ abstract class AutonomyNearBase: AutonomyBase() {
         setStatus("Driving to crypto box.")
         update()
 
-        val distance = vuMark.distance
-        robot.driveDistance(-distance, robot.heading.toDouble())
+        val distance = vuMark.distance + if (directionSign == -1.0) { 10.0 } else { 0.0 }
+        robot.driveDistance(directionSign * -distance, 0.0)
 
-        robot.rotateTo(when(directionSign){ 1.0 -> -0.0 else -> -172.0})
-        robot.rotateTo(when(directionSign){ 1.0 -> -0.0 else -> -172.0})
+        robot.rotateTo(cryptoBoxDirection)
+        robot.rotateTo(cryptoBoxDirection)
 
         waitForMs(200)
     }

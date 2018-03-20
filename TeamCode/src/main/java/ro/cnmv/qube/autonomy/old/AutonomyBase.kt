@@ -1,4 +1,4 @@
-package ro.cnmv.qube.autonomy
+package ro.cnmv.qube.autonomy.old
 
 import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark
@@ -74,9 +74,9 @@ abstract class AutonomyBase: RobotOpMode() {
         setStatus("Dropping cube")
         update()
 
-        robot.drop(-0.6)
+        robot.dropCubesAuto(true)
         waitForMs(900)
-        robot.drop(0.0)
+        robot.dropCubesAuto(false)
 
         waitForMs(1000)
 
