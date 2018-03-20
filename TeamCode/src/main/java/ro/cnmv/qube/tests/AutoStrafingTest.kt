@@ -3,7 +3,7 @@ package ro.cnmv.qube.tests
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import ro.cnmv.qube.core.RobotOpMode
 
-@Autonomous(name = "Auto Strafing Test", group = "Test")
+@Autonomous(name = "Auto Strafing Test", group = "Tests")
 class AutoStrafingTest: RobotOpMode() {
     private val targetDistance = 20.0
 
