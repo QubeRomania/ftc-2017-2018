@@ -3,8 +3,11 @@ package ro.cnmv.qube.autonomy
 import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark
 import ro.cnmv.qube.core.RobotOpMode
+import ro.cnmv.qube.systems.Jewel
 
 abstract class AutonomyBase: RobotOpMode() {
+    abstract val ourColor: Jewel.Color
+
     override fun runOpMode() {
         if (hardwareMap == null)
             throw RuntimeException("Hardware map has not been initialized!")
@@ -18,7 +21,13 @@ abstract class AutonomyBase: RobotOpMode() {
             return
         }
 
+        readVuMark()
+
+        robot.dropJewel(ourColor)
+
         postStart()
+
+        robot.stop()
     }
 
     private fun postInit() {
@@ -27,6 +36,9 @@ abstract class AutonomyBase: RobotOpMode() {
         robot.initVuforia()
 
         calibrateGyro()
+
+        robot.leftDropServo.position = 0.5
+        robot.rightDropServo.position = 0.5
     }
 
     protected abstract fun postStart()
@@ -59,9 +71,9 @@ abstract class AutonomyBase: RobotOpMode() {
     }
 
     ///
-    private fun RelicRecoveryVuMark.column() = when (this) {
-        RelicRecoveryVuMark.LEFT -> 1
-        RelicRecoveryVuMark.RIGHT -> 3
+    protected fun RelicRecoveryVuMark.column() = when (this) {
+        RelicRecoveryVuMark.LEFT -> 3
+        RelicRecoveryVuMark.RIGHT -> 1
         else -> 2
     }
 
@@ -69,11 +81,12 @@ abstract class AutonomyBase: RobotOpMode() {
         setStatus("Dropping cube")
         update()
 
-        robot.dropCubesAuto(true)
-        waitForMs(900)
-        robot.dropCubesAuto(false)
+        robot.driveDistance(5.0, robot.heading.toDouble())
 
-        waitForMs(1000)
+        waitForMs(200)
+        robot.dropCubesAuto(true)
+        waitForMs(1200)
+
 
         setStatus("Pushing cube in crypto box")
         update()
@@ -83,5 +96,8 @@ abstract class AutonomyBase: RobotOpMode() {
         robot.driveTime(2000, -0.4)
 
         robot.driveDistance(3.0, robot.heading.toDouble())
+
+        robot.dropCubesAuto(false)
     }
+
 }
