@@ -8,7 +8,7 @@ import ro.cnmv.qube.systems.*
 import ro.cnmv.qube.systems.VuforiaImpl
 
 class Robot(private val opMode: RobotOpMode):
-        DriveMotors, Gyro, Drive, CryptoAlign, CubesIntake, CubesLift, CubesDrop, Jewel, OpModeAccess by opMode {
+        DriveMotors, Gyro, Drive, CryptoAlign, CubesIntake, CubesLift, CubesDrop, Jewel, Sensors, OpModeAccess by opMode {
 
     private val hwMap = opMode.hardwareMap
 
@@ -33,6 +33,13 @@ class Robot(private val opMode: RobotOpMode):
     override val gyro = initGyro()
     override val colorSensor = initColorSensor()
     override val backRangeSensor = hwMap.get(ModernRoboticsI2cRangeSensor::class.java, "backRangeSensor")!!
+
+    override val leftAnalogSensor = hwMap.analogInput["leftAnalogSensor"]
+    override val rightAnalogSensor = hwMap.analogInput["rightAnalogSensor"]
+
+    override val leftDigitalSensor = hwMap.digitalChannel["leftDigitalSensor"]
+    override val rightDigitalSensor = hwMap.digitalChannel["rightDigitalSensor"]
+
 
     // SERVOS
     override val leftDropServo = initServo("leftDropServo")
@@ -65,6 +72,9 @@ class Robot(private val opMode: RobotOpMode):
         liftMotor.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
         liftMotor.targetPosition = 0
         liftMotor.power = 0.5
+
+        leftDigitalSensor.mode = DigitalChannel.Mode.INPUT
+        rightDigitalSensor.mode = DigitalChannel.Mode.INPUT
     }
 
     // Initializes Vuforia in a new thread to speed up robot start up.
