@@ -28,7 +28,7 @@ class AutoStrafingTest: RobotOpMode() {
         }()
         */
 
-        robot.runToColumn(3, 1.0)
+        robot.runToColumn(3, 1.0, 0.0)
 
         robot.stop()
     }

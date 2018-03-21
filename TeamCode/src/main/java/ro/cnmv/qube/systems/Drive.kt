@@ -121,8 +121,8 @@ interface Drive: DriveMotors, Gyro, Sensors, OpModeAccess {
         stopMotors()
     }
 
-    fun runToColumn(column: Int, directionSign: Double) {
-        val basePower = 0.45 * directionSign
+    fun runToColumn(column: Int, directionSign: Double, targetHeading: Double) {
+        val basePower = 0.40 * directionSign
         var lastAngleError = 0.0
 
         var leftCount = 0
@@ -135,7 +135,7 @@ interface Drive: DriveMotors, Gyro, Sensors, OpModeAccess {
             }
 
             val motorCorrection = {
-                val error = -heading.toDouble()
+                val error = targetHeading - heading.toDouble()
 
                 val P = 0.03
                 val I = 0.00
@@ -153,15 +153,15 @@ interface Drive: DriveMotors, Gyro, Sensors, OpModeAccess {
                     basePower - motorCorrection,
                     -basePower + motorCorrection)
 
-            /*
-            telemetry.addData("Target Column", column)
-            telemetry.addData("Angle", robot.heading)
-            telemetry.addData("Correction", motorCorrection)
-            telemetry.addData("LeftCount", leftCount)
-            telemetry.addData("LeftVoltage", robot.leftAnalogSensor.voltage)
+            tele.addData("Target Column", column)
+            tele.addData("Angle", heading)
+            tele.addData("Correction", motorCorrection)
+            tele.addData("LeftCount", leftCount)
+            tele.addData("LeftVoltage", leftAnalogSensor.voltage)
 
-            telemetry.update()
-            */
+            tele.update()
         }
+
+        stopMotors()
     }
 }
