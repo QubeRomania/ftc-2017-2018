@@ -1,6 +1,7 @@
 package ro.cnmv.qube.tests
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
+import com.qualcomm.robotcore.hardware.Servo
 import ro.cnmv.qube.core.RobotOpMode
 
 @TeleOp (name = "Servo Test", group = "Tests")
@@ -8,24 +9,17 @@ class ServoTest: RobotOpMode() {
     override fun runOpMode() {
         waitForStart()
 
-                /*
-        val controller = robot.jewServo.controller
-        val servo = 1
+        var position = 0.0
 
-        fun getPosition() = controller.getServoPosition(servo)
+        robot.leftDropServo.direction = Servo.Direction.REVERSE
 
-        val position = getPosition()
-
-        fun setPosition(position: Double) = controller.setServoPosition(servo, position)
-
-        while (opModeActive) {
-            setPosition(position)
+        while(opModeIsActive()){
+            robot.leftDropServo.position = position
+            waitForMs(1000)
+            position = position + 0.1
+            if(position > 1) position = 0.0
+            telemetry.addData("postion", position)
+            telemetry.update()
         }
-        */
-
-        robot.jewHitServo.position = 0.0
-        waitForMs(500)
-        robot.jewHitServo.position = 1.0
     }
-
 }
