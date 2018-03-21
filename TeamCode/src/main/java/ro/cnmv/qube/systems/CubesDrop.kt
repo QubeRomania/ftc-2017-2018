@@ -24,7 +24,7 @@ interface CubesDrop {
         } else if (gp.left_trigger > 0.7 && dropPosition >= 0.1) {
             dropPosition -= 0.1
         } else if (gp.right_bumper) {
-            dropPosition = 0.3
+            dropPosition = 0.4
         }
 
         leftDropServo.position = dropPosition
