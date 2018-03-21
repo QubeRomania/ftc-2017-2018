@@ -12,10 +12,12 @@ import kotlin.math.absoluteValue
 import kotlin.math.roundToInt
 import kotlin.math.sign
 
-interface Drive: DriveMotors, Gyro, OpModeAccess {
+interface Drive: DriveMotors, Gyro, Sensors, OpModeAccess {
     companion object {
         private const val TICKS_PER_MOTOR_ROTATION = 1120.0
         private const val RATIO = 2.0 * TICKS_PER_MOTOR_ROTATION / 65.0
+
+        private const val VOLTAGE_THRESHOLD = 1.5
 
         val Double.ticks
             get() = (this * RATIO).roundToInt()
@@ -117,5 +119,49 @@ interface Drive: DriveMotors, Gyro, OpModeAccess {
             ;
 
         stopMotors()
+    }
+
+    fun runToColumn(column: Int, directionSign: Double) {
+        val basePower = 0.45 * directionSign
+        var lastAngleError = 0.0
+
+        var leftCount = 0
+
+        val timer = ElapsedTime()
+        while (opModeActive && leftCount < column) {
+            if (leftAnalogSensor.voltage > VOLTAGE_THRESHOLD && timer.milliseconds() > 1000) {
+                ++leftCount
+                timer.reset()
+            }
+
+            val motorCorrection = {
+                val error = -heading.toDouble()
+
+                val P = 0.03
+                val I = 0.00
+                val D = 0.1
+                val pid = P * error + I * (error + lastAngleError) + D * (error - lastAngleError)
+
+                lastAngleError = error
+
+                pid
+            }()
+
+            setPower(
+                    -basePower - motorCorrection,
+                    basePower + motorCorrection,
+                    basePower - motorCorrection,
+                    -basePower + motorCorrection)
+
+            /*
+            telemetry.addData("Target Column", column)
+            telemetry.addData("Angle", robot.heading)
+            telemetry.addData("Correction", motorCorrection)
+            telemetry.addData("LeftCount", leftCount)
+            telemetry.addData("LeftVoltage", robot.leftAnalogSensor.voltage)
+
+            telemetry.update()
+            */
+        }
     }
 }
