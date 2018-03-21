@@ -14,6 +14,8 @@ class DriveOpMode: RobotOpMode() {
     override fun runOpMode() {
         waitForStart()
 
+        val gp2 = Gamepad(gamepad2)
+
         while (opModeIsActive()) {
             if(gamepad1.x && timer.milliseconds() - jewelLastTime > 1000){
                 jewelState = !jewelState
@@ -27,10 +29,12 @@ class DriveOpMode: RobotOpMode() {
             robot.intakeWithGamepad(gamepad2)
 
             // CUBES LIFT
-            robot.liftWithGamepad(gamepad2)
+            robot.liftWithGamepad(gp2)
 
             // CUBES DROP
             robot.dropWithGamepad(gamepad2)
+
+            tele.update()
         }
     }
 }

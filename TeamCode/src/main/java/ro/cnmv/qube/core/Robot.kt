@@ -27,9 +27,7 @@ class Robot(private val opMode: RobotOpMode):
     override val intakeLeft: DcMotor = initMotor("leftIntakeMotor", Direction.FORWARD)
     override val intakeRight: DcMotor = initMotor("rightIntakeMotor", Direction.REVERSE)
 
-    override val liftMotor: DcMotor = initMotor("liftMotor", Direction.REVERSE)
-
-    override var power: Double = 0.0
+    override val liftMotor: DcMotor = initMotor("liftMotor", Direction.FORWARD)
 
     // SENSORS
     override val gyro = initGyro()
@@ -42,24 +40,31 @@ class Robot(private val opMode: RobotOpMode):
     override val jewServo = initServo("jewServo")
     override val jewHitServo = initServo("jewHitServo")
 
+    override var dropPosition = 0.0
 
     init {
         jewServo.position = Jewel.JEWEL_ARM_TOP_POSITION
 
         val LEFT_DOWN_POSITION = 0.0
-        val LEFT_UP_POSITION = 1.0
-        val RIGHT_DOWN_POSITION = 133.0 / 255.0
-        val RIGHT_UP_POSITION = 240.0 / 255.0
+        val LEFT_UP_POSITION = 0.7
+        val RIGHT_DOWN_POSITION = 0.5
+        val RIGHT_UP_POSITION = 1.0
 
-        leftDropServo.scaleRange(LEFT_DOWN_POSITION, LEFT_UP_POSITION)
         leftDropServo.direction = Servo.Direction.REVERSE
         leftDropServo.position = 0.0
+        leftDropServo.scaleRange(LEFT_DOWN_POSITION, LEFT_UP_POSITION)
+        leftDropServo.position = 0.0
 
-        rightDropServo.scaleRange(RIGHT_DOWN_POSITION, RIGHT_UP_POSITION)
         rightDropServo.direction = Servo.Direction.FORWARD
+        rightDropServo.position = 0.0
+        rightDropServo.scaleRange(RIGHT_DOWN_POSITION, RIGHT_UP_POSITION)
         rightDropServo.position = 0.0
 
         liftMotor.mode = DcMotor.RunMode.RUN_USING_ENCODER
+        liftMotor.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
+        liftMotor.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
+        liftMotor.targetPosition = 0
+        liftMotor.power = 0.5
     }
 
     // Initializes Vuforia in a new thread to speed up robot start up.
@@ -79,7 +84,7 @@ class Robot(private val opMode: RobotOpMode):
         intakeLeft.power = 0.0
         intakeRight.power = 0.0
 
-        lift(0.0)
+        liftPosition(0)
         dropCubesAuto(false)
     }
 
