@@ -29,6 +29,8 @@ class Robot(private val opMode: RobotOpMode):
 
     override val liftMotor: DcMotor = initMotor("liftMotor", Direction.FORWARD)
 
+    override var manualLiftPosition = 0
+
     // SENSORS
     override val gyro = initGyro()
     override val colorSensor = initColorSensor()
@@ -52,9 +54,9 @@ class Robot(private val opMode: RobotOpMode):
     init {
         jewServo.position = Jewel.JEWEL_ARM_TOP_POSITION
 
-        val LEFT_DOWN_POSITION = 0.0
-        val LEFT_UP_POSITION = 0.7
-        val RIGHT_DOWN_POSITION = 0.5
+        val LEFT_DOWN_POSITION = 43.0 / 255.0
+        val LEFT_UP_POSITION = 1.0
+        val RIGHT_DOWN_POSITION = 130.0 / 255.0
         val RIGHT_UP_POSITION = 1.0
 
         leftDropServo.direction = Servo.Direction.REVERSE

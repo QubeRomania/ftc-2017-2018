@@ -7,6 +7,7 @@ import ro.cnmv.qube.systems.Jewel
 
 abstract class AutonomyBase: RobotOpMode() {
     abstract val ourColor: Jewel.Color
+    abstract val vuforiaTimeout: Long
 
     override fun runOpMode() {
         if (hardwareMap == null)
@@ -37,8 +38,8 @@ abstract class AutonomyBase: RobotOpMode() {
 
         calibrateGyro()
 
-        robot.leftDropServo.position = 0.5
-        robot.rightDropServo.position = 0.5
+        robot.leftDropServo.position = 0.32
+        robot.rightDropServo.position = 0.32
     }
 
     protected abstract fun postStart()
@@ -56,7 +57,7 @@ abstract class AutonomyBase: RobotOpMode() {
         waitForMs(200)
 
         val timer = ElapsedTime()
-        while (opModeIsActive() && vuMark == RelicRecoveryVuMark.UNKNOWN && timer.milliseconds() < 1000) {
+        while (opModeIsActive() && vuMark == RelicRecoveryVuMark.UNKNOWN && timer.milliseconds() < vuforiaTimeout) {
             vuMark = vuforia.vuMark
 
             waitForMs(50)

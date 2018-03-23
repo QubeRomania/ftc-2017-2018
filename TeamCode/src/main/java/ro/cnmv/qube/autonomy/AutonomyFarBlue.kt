@@ -6,6 +6,7 @@ import ro.cnmv.qube.systems.Jewel
 @Autonomous(name = "Autonomy Far Blue", group = "NearAutonomies")
 class AutonomyFarBlue: AutonomyBase() {
     override val ourColor = Jewel.Color.BLUE
+    override val vuforiaTimeout = 1000L
     override fun postStart() {
         robot.driveDistance(-35.0, 0.0)
         robot.rotateTo(90.0)

@@ -34,5 +34,7 @@ class VuforiaTest: RobotOpMode() {
         }
 
         vuforia.deactivate()
+
+        robot.stop()
     }
 }
