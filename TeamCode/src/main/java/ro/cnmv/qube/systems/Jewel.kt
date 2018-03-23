@@ -10,7 +10,7 @@ interface Jewel: OpModeAccess {
     val colorSensor: NormalizedColorSensor
 
     companion object {
-        const val JEWEL_ARM_TOP_POSITION = 200.0 / 255.0
+        const val JEWEL_ARM_TOP_POSITION = 230.0 / 255.0
         const val JEWEL_ARM_BOTTOM_POSITION = 0.0 / 255.0
 
         const val JEWEL_HIT_MIDDLE_POSITION = 119.0 / 255.0
@@ -45,6 +45,7 @@ interface Jewel: OpModeAccess {
                 jewServo.position = position
                 waitMillis(200)
             }
+            jewServo.position = 0.0
         } else {
             jewServo.position = JEWEL_ARM_TOP_POSITION
         }

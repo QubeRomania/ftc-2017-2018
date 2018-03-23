@@ -36,5 +36,8 @@ class DriveOpMode: RobotOpMode() {
 
             tele.update()
         }
+
+
+        robot.stop()
     }
 }

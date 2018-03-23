@@ -7,9 +7,10 @@ import ro.cnmv.qube.core.OpModeAccess
 
 interface CubesLift: OpModeAccess {
     val liftMotor: DcMotor
+    var manualLiftPosition: Int
 
     companion object {
-        const val LIFT_SPEED = 1
+        const val LIFT_SPEED = 100
 
         const val LIFT_BOTTOM = 0
         // TODO: MIDDLE
@@ -20,19 +21,17 @@ interface CubesLift: OpModeAccess {
         if (gp.checkButtonToggle(GamepadButton.LEFT_BUMPER)) {
             tele.addData("Mode", "manual")
             // Manual mode
-            var newPosition = liftMotor.currentPosition + when {
+            manualLiftPosition = liftMotor.currentPosition
+
+            manualLiftPosition += when {
                 gp.checkButtonHold(GamepadButton.A) -> +LIFT_SPEED
                 gp.checkButtonHold(GamepadButton.B) -> -LIFT_SPEED
                 else -> 0
             }
 
-            if (newPosition < LIFT_BOTTOM) {
-                newPosition = LIFT_BOTTOM
-            } else if (newPosition > LIFT_TOP) {
-                newPosition = LIFT_TOP
-            }
+            tele.addData("position", manualLiftPosition)
 
-            liftPosition(newPosition)
+            liftPosition(manualLiftPosition)
         } else {
             tele.addData("Mode", "auto")
             // Auto mode
