@@ -3,6 +3,7 @@ package ro.cnmv.qube.drive
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.util.ElapsedTime
 import ro.cnmv.qube.core.Gamepad
+import ro.cnmv.qube.core.GamepadButton
 import ro.cnmv.qube.core.RobotOpMode
 
 @TeleOp(name = "Complete Drive", group = "Drive")
@@ -22,11 +23,17 @@ class DriveOpMode: RobotOpMode() {
                 jewelLastTime = timer.milliseconds().toLong()
                 robot.jewServo.position = when(jewelState){true -> 1.0 else -> 0.0}
             }
+
             // DRIVE
             robot.driveWithGamepad(gamepad1)
 
-            // CUBES INTAKE
-            robot.intakeWithGamepad(gamepad2)
+            // Only allow intake when cube plate is lowered.
+            tele.addData("Intake", "RESTRICTED")
+            if (robot.dropPosition < 0.35 || gp2.checkButtonToggle(GamepadButton.X)) {
+                // CUBES INTAKE
+                robot.intakeWithGamepad(gamepad2)
+                tele.addData("Intake", "ALLOWED")
+            }
 
             // CUBES LIFT
             robot.liftWithGamepad(gp2)
@@ -36,7 +43,6 @@ class DriveOpMode: RobotOpMode() {
 
             tele.update()
         }
-
 
         robot.stop()
     }
