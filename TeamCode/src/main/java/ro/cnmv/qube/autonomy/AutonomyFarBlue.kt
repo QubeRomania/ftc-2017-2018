@@ -3,7 +3,7 @@ package ro.cnmv.qube.autonomy
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import ro.cnmv.qube.systems.Jewel
 
-@Autonomous(name = "Autonomy Far Blue", group = "NearAutonomies")
+@Autonomous(name = "Autonomy Far Blue", group = "Near Autonomies")
 class AutonomyFarBlue: AutonomyBase() {
     override val ourColor = Jewel.Color.BLUE
     override val vuforiaTimeout = 1000L
