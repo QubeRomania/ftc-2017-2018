@@ -10,13 +10,16 @@ import ro.cnmv.qube.systems.VuforiaImpl
 @Autonomous(name = "Vuforia Test", group = "Tests")
 class VuforiaTest: RobotOpMode() {
     override fun runOpMode() {
-        robot.initVuforia()
-
-        waitForStart()
+        tele.addData("Vuforia", "Initializing")
+        tele.update()
 
         val vuforia = robot.vuforia
-
         vuforia.activate()
+
+        tele.addData("Vuforia", "OK")
+        tele.update()
+
+        waitForStart()
 
         while (opModeIsActive()) {
             val vuMarkType = when (vuforia.vuMark) {
