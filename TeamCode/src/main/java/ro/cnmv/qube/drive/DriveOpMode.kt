@@ -28,11 +28,11 @@ class DriveOpMode: RobotOpMode() {
             robot.driveWithGamepad(gamepad1)
 
             // Only allow intake when cube plate is lowered.
-            tele.addData("Intake", "RESTRICTED")
+            var intake = "RESTRICTED"
             if (robot.dropPosition < 0.35 || gp2.checkButtonToggle(GamepadButton.X)) {
                 // CUBES INTAKE
                 robot.intakeWithGamepad(gamepad2)
-                tele.addData("Intake", "ALLOWED")
+                intake = "ALLOWED"
             }
 
             // CUBES LIFT
@@ -41,6 +41,7 @@ class DriveOpMode: RobotOpMode() {
             // CUBES DROP
             robot.dropWithGamepad(gamepad2)
 
+            tele.addData("Intake", intake)
             tele.update()
         }
 
