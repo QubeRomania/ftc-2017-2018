@@ -33,17 +33,20 @@ abstract class RobotOpMode: LinearOpMode(), OpModeAccess {
     protected fun calibrateGyro() {
         val gyro = robot.gyro
 
-        setStatus("Calibrating gyro. Please wait...")
-        update()
-
         gyro.calibrate()
 
         while (!isStopRequested && gyro.isCalibrating) {
-            waitForMs(100)
+            tele.addData("Calibrating", "Please wait!")
+            tele.update()
+            sleep(50)
         }
 
-        setStatus("Finished calibrating gyro!")
-        update()
+        gyro.resetZAxisIntegrator()
+
+        tele.log().clear()
+        tele.log().add("Gyro calibrated")
+        tele.clear()
+        tele.update()
     }
 
     protected fun waitForMs(millis: Long) {
@@ -52,5 +55,4 @@ abstract class RobotOpMode: LinearOpMode(), OpModeAccess {
             // Allow other threads to run.
             idle()
     }
-
 }
