@@ -24,7 +24,7 @@ interface CubesDrop: OpModeAccess{
         } else if (gp.left_trigger > 0.7) {
             dropPosition = Math.max(0.0, dropPosition - 0.1)
         } else if (gp.right_bumper) {
-            dropPosition = 0.30
+            dropPosition = 0.33
         }
 
         tele.addData("Drop Position", dropPosition)
