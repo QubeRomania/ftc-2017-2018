@@ -21,24 +21,15 @@ package ro.cnmv.qube.pid
  * SOFTWARE.
  */
 
+import com.qualcomm.robotcore.hardware.PIDCoefficients
 import java.io.IOException
 import java.net.DatagramPacket
 import java.net.DatagramSocket
 import java.net.InetAddress
 import java.nio.ByteBuffer
 
-class RemotePid : Pid {
-    @get:Synchronized
-    override var p: Double = 0.0
-        private set
-
-    @get:Synchronized
-    override var i: Double = 0.0
-        private set
-
-    @get:Synchronized
-    override var d: Double = 0.0
-        private set
+class RemotePid {
+    var pid = PIDCoefficients(0.0, 0.0, 0.0)
 
     private var backgroundThread: Thread? = null
 
@@ -76,9 +67,9 @@ class RemotePid : Pid {
                     return ByteBuffer.wrap(bytes).double
                 }
 
-                p = toDouble(pVal)
-                i = toDouble(iVal)
-                d = toDouble(dVal)
+                pid.p = toDouble(pVal)
+                pid.i = toDouble(iVal)
+                pid.d = toDouble(dVal)
             }
 
             serverSocket.close()
