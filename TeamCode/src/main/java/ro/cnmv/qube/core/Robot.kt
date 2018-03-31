@@ -5,7 +5,6 @@ import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor
 import com.qualcomm.robotcore.hardware.*
 import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction
 import ro.cnmv.qube.systems.*
-import ro.cnmv.qube.systems.VuforiaImpl
 
 class Robot(private val opMode: RobotOpMode):
         DriveMotors, Gyro, Drive, CryptoAlign, CubesIntake, CubesLift, CubesDrop, Jewel, Sensors, OpModeAccess by opMode {
@@ -36,11 +35,11 @@ class Robot(private val opMode: RobotOpMode):
     override val colorSensor = initColorSensor()
     override val backRangeSensor = hwMap.get(ModernRoboticsI2cRangeSensor::class.java, "backRangeSensor")!!
 
-    override val leftAnalogSensor = hwMap.analogInput["leftAnalogSensor"]
-    override val rightAnalogSensor = hwMap.analogInput["rightAnalogSensor"]
+    override val leftAnalogSensor = hwMap.analogInput["leftAnalogSensor"]!!
+    override val rightAnalogSensor = hwMap.analogInput["rightAnalogSensor"]!!
 
-    override val leftDigitalSensor = hwMap.digitalChannel["leftDigitalSensor"]
-    override val rightDigitalSensor = hwMap.digitalChannel["rightDigitalSensor"]
+    override val leftDigitalSensor = hwMap.digitalChannel["leftDigitalSensor"]!!
+    override val rightDigitalSensor = hwMap.digitalChannel["rightDigitalSensor"]!!
 
 
     // SERVOS

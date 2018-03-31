@@ -2,12 +2,11 @@ package ro.cnmv.qube.systems
 
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.Gamepad
+import com.qualcomm.robotcore.hardware.PIDCoefficients
 import com.qualcomm.robotcore.util.ElapsedTime
 import ro.cnmv.qube.core.DriveMotors
 import ro.cnmv.qube.core.Gyro
 import ro.cnmv.qube.core.OpModeAccess
-import ro.cnmv.qube.pid.DistancePid
-import ro.cnmv.qube.pid.Pid
 import kotlin.math.absoluteValue
 import kotlin.math.roundToInt
 import kotlin.math.sign
@@ -37,11 +36,11 @@ interface Drive: DriveMotors, Gyro, Sensors, OpModeAccess {
     }
 
     fun driveDistance(distance: Double, targetDirection: Double) {
-        val pid = DistancePid()
+        val pid = PIDCoefficients(0.1, 0.02, 0.1)
         driveDistanceWithPid(distance, targetDirection, pid)
     }
 
-    fun driveDistanceWithPid(distance: Double, targetDirection: Double, pid: Pid) {
+    fun driveDistanceWithPid(distance: Double, targetDirection: Double, pid: PIDCoefficients) {
         val p = pid.p
         val i = pid.i
         val d = pid.d

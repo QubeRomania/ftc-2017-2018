@@ -1,12 +1,11 @@
 package ro.cnmv.qube.tests
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
+import com.qualcomm.robotcore.hardware.PIDCoefficients
 import com.qualcomm.robotcore.util.ElapsedTime
 import ro.cnmv.qube.core.Gamepad
 import ro.cnmv.qube.core.GamepadButton
 import ro.cnmv.qube.core.RobotOpMode
-import ro.cnmv.qube.pid.DistancePid
-import ro.cnmv.qube.pid.RemotePid
 
 @Autonomous(name = "PID Test", group = "Tests")
 class PidTest: RobotOpMode() {
@@ -16,36 +15,32 @@ class PidTest: RobotOpMode() {
         //val pid = RemotePid()
         //pid.beginListening()
 
-        val pid = DistancePid()
+        val pid = PIDCoefficients(0.1, 0.02, 0.1)
 
         waitForStart()
 
         val gp = Gamepad(gamepad1)
 
-        val timer1 = ElapsedTime()
-        val timer2 = ElapsedTime()
-        val timer3 = ElapsedTime()
-        val timer4 = ElapsedTime()
-
-        val delay = 250.0
-
         var targetAngle = 0.0
+        var lastStates = arrayOf(false, false, false, false)
 
         while (opModeIsActive()) {
-            if (gp.checkButtonHold(GamepadButton.A) && timer1.milliseconds() > delay) {
+            if (lastStates[0] != gp.checkButtonToggle(GamepadButton.A)) {
                 targetAngle += 5.0
-                timer1.reset()
-            }
-            if (gp.checkButtonHold(GamepadButton.X) && timer2.milliseconds() > delay) {
-                targetAngle -= 5.0
-                timer2.reset()
+                lastStates[0] = !lastStates[0]
             }
 
-            if (gp.checkButtonHold(GamepadButton.B) && timer3.milliseconds() > delay) {
-                robot.rotateTo(targetAngle)
-                timer3.reset()
+            if (lastStates[1] != gp.checkButtonToggle(GamepadButton.X)) {
+                targetAngle -= 5.0
+                lastStates[1] = !lastStates[1]
             }
-            if (gp.checkButtonHold(GamepadButton.Y) && timer4.milliseconds() > delay) {
+
+            if (lastStates[2] != gp.checkButtonToggle(GamepadButton.B)) {
+                robot.rotateTo(targetAngle)
+                lastStates[2] = !lastStates[2]
+            }
+
+            if (gp.checkButtonToggle(GamepadButton.Y)) {
                 val distance = 100.0
 
                 robot.driveDistanceWithPid(distance, targetAngle, pid)
@@ -53,8 +48,7 @@ class PidTest: RobotOpMode() {
                 waitForMs(1000)
 
                 robot.driveDistanceWithPid(-distance, targetAngle, pid)
-
-                timer4.reset()
+                lastStates[3] = !lastStates[3]
             }
 
 
@@ -64,5 +58,6 @@ class PidTest: RobotOpMode() {
         }
 
         //pid.shutdown()
+        robot.stop()
     }
 }
