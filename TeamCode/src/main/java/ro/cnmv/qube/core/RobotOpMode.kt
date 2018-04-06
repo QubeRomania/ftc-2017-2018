@@ -22,30 +22,21 @@ abstract class RobotOpMode: LinearOpMode(), OpModeAccess {
         Robot(this)
     }
 
-    protected fun setStatus(status: String) {
-        telemetry.addData("Status", status)
-    }
-
-    protected fun update() {
-        telemetry.update()
-    }
-
+    /// Calibrate's the robot's gyroscope.
     protected fun calibrateGyro() {
         val gyro = robot.gyro
 
         gyro.calibrate()
 
         while (!isStopRequested && gyro.isCalibrating) {
-            tele.addData("Calibrating", "Please wait!")
+            tele.addData("Gyro", "calibrating - please wait!")
             tele.update()
             sleep(50)
         }
 
         gyro.resetZAxisIntegrator()
 
-        tele.log().clear()
-        tele.log().add("Gyro calibrated")
-        tele.clear()
+        tele.addData("Gyro", "calibrated")
         tele.update()
     }
 
@@ -55,4 +46,7 @@ abstract class RobotOpMode: LinearOpMode(), OpModeAccess {
             // Allow other threads to run.
             idle()
     }
+
+    protected fun setStatus(status: Any) = telemetry.addData("Status", status)
+    protected fun update() = telemetry.update()
 }
