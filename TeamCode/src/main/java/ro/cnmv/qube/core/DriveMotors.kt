@@ -7,11 +7,6 @@ import org.firstinspires.ftc.robotcore.external.Telemetry
 interface DriveMotors: OpModeAccess {
     companion object {
         const val MAX_POWER = 0.78
-
-        const val FRONT_LEFT = 1.0
-        const val FRONT_RIGHT = 1.0
-        const val BACK_LEFT = 1.0
-        const val BACK_RIGHT = 1.0
     }
 
     val frontLeft: DcMotor
@@ -26,12 +21,10 @@ interface DriveMotors: OpModeAccess {
     }
 
     fun setPower(frontLeft: Double, frontRight: Double, backLeft: Double, backRight: Double) {
-        this.frontLeft.power = frontLeft * FRONT_LEFT * MAX_POWER
-        this.frontRight.power = frontRight * FRONT_RIGHT * MAX_POWER
-        this.backLeft.power = backLeft * BACK_LEFT * MAX_POWER
-        this.backRight.power = backRight * BACK_RIGHT * MAX_POWER
-
-        //printPower()
+        this.frontLeft.power = frontLeft * MAX_POWER
+        this.frontRight.power = frontRight * MAX_POWER
+        this.backLeft.power = backLeft * MAX_POWER
+        this.backRight.power = backRight * MAX_POWER
     }
 
     fun stopMotors() {
